@@ -1,0 +1,33 @@
+
+body {
+    background: url("https://wallpaperset.com/w/full/b/7/8/264096.jpg") no-repeat top left;
+    background-size: cover;
+    padding: 0px;
+    margin: 0px;
+    background-color: blanchedalmond;
+    
+    
+  }
+  
+  .logo {
+    background-image: url("https://www.graphicsprings.com/filestorage/stencils/aea126a28feb00b996ef0ccf47171221.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    padding: 0px;
+    margin: 0px;
+    width: 30px;
+    height: 30px;
+  }
+ nav{
+  background-color: blanchedalmond;
+ }
+ .btn{
+  line-height: .3;
+ }
+ .navbar-brand{
+   border-color: gray;
+ }
+ .card{
+  color: blanchedalmond;
+}
