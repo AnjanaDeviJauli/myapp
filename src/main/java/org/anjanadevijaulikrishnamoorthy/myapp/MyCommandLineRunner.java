@@ -25,10 +25,10 @@ import java.util.List;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MyCommandLineRunner implements CommandLineRunner {
-    StudentRepoI studentRepoI;
-    CourseRepoI courseRepoI;
-    TeacherRepoI teacherRepoI;
-    StudentCourseScoreRepoI studentCourseScoreRepoI;
+    final StudentRepoI studentRepoI;
+    final CourseRepoI courseRepoI;
+    final TeacherRepoI teacherRepoI;
+    final StudentCourseScoreRepoI studentCourseScoreRepoI;
 
     @Autowired
     public MyCommandLineRunner(StudentRepoI studentRepoI,
@@ -151,6 +151,12 @@ public class MyCommandLineRunner implements CommandLineRunner {
    StudentCourseScore sc5s = new StudentCourseScore(s5,science,99);
    StudentCourseScore sc5o = new StudentCourseScore(s5,social,99);
    StudentCourseScore sc5l = new StudentCourseScore(s5,language,99);
+
+   studentCourseScoreRepoI.saveAll(List.of(sc1m,sc1o,sc1l,sc1s,
+           sc2m,sc2o,sc2l,sc2s,
+           sc3m,sc3o,sc3l,sc3s,
+           sc4m,sc4o,sc4l,sc4s,
+           sc5m,sc5o,sc5l,sc5s));
 
 
 
