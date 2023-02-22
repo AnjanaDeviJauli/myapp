@@ -97,7 +97,7 @@ public class StudentController {
     @PostMapping("/s")
     public String studentProcess(@ModelAttribute("student") Student students){
         log.warn("student process method" + students);
-        log.warn(students.toString());
+        //log.warn(students.toString());
         studentRepoI.save(students);
         return "studentform";
     }
