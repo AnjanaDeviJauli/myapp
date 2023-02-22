@@ -27,3 +27,16 @@ body {
    border-color: gray;
  }
 
+
+.card {
+  background-color: blanchedalmond;
+}
+.btn-primary {
+  background-color: gray;
+}
+textarea {
+  position: relative;
+}
+h3,label{
+  color: black;
+}

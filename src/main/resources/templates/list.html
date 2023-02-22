@@ -1,96 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
-    <link rel="stylesheet" th:href="@{/css/list.css}" />
-</head>
-<body>
-    <a id="logo" href="search.html">
-
-        <div class="logo"></div>
-
-        </a>
-
-
-    <center>
-        <h1 style="color:blanchedalmond;font-size:60px;">Great Elementary School</h1> </center>
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-light justify-content-between ">
-
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class=" navbar-collapse" id="navbarNav">
-                <div class="navbar-nav">
-                  <a class=" nav-item nav-link" th:href="@{first}">First Grade</a>
-                  <a class="nav-item nav-link" th:href="@{second}">Second Grade</a>
-                  <a class="nav-item nav-link" th:href="@{third}">Third Grade</a>
-                  <a class="nav-item nav-link" th:href="@{fourth}">Fourth Grade</a>
-                  <a class="nav-item nav-link" th:href="@{list}">All students</a>
-
-                </div>
-              </div>
-
-              <form class="form-inline nav-item ">
-
-                <a class="btn btn-outline-success my-2 my-sm-0" href="index.html"  type="button">Logout</a>
-              </form>
-            </nav>
-          </div>
-<div class="container">
-    <div class="row" >
-        <!-- <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="stu: ${allstu}">
-                <th scope="row" th:text="${stu.id}"></th>
-                <td th:text="${stu.firstName}"></td>
-                <td th:text="${stu.lastName}"></td>
-                <td th:text="${stu.grade}"></td>
-              </tr>
-            </tbody>
-          </table> -->
-          
-            <div class="col-sm-4 gy-5" th:each="stu: ${allstu}">
-          <div class="card" style="width: 18rem;" >
-            <div class="card-header">
-              <span>Student Id:</span>
-              <span th:text="${stu.id}"></span>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item"><span>First Name:</span>
-                <span th:text="${stu.firstName}"></span>
-              </li>
-              <li class="list-group-item"><span>Last Name:</span>
-                <span th:text="${stu.lastName}"></span></li>
-              <li class="list-group-item"><span>Gender:</span>
-                  <span th:text="${stu.gender}"></span></li>
-              <li class="list-group-item"><span>Grade:</span>
-                    <span th:text="${stu.grade}"></span></li>
-            </ul>
-          </div>
-        </div>
-          
+  <div th:replace="fragrams/header :: header" />
+  <body>
+    <div>
+      <div th:replace="fragrams/nav :: nav" />
     </div>
-  </div>
+    <div class="container">
+      <center> <h2>All Students</h2></center>
+      <div class="row">
+        <div th:replace="fragrams/girlboycount :: girlboycount" />
+      </div>
+      <div class="row">
+        
+          <div th:replace="fragrams/studentcard :: studentcard" />
+        
+      </div>
+    </div>
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
-
+    <div th:replace="fragrams/footer :: footer" />
+  </body>
 </html>

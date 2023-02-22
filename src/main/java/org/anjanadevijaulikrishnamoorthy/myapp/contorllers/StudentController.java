@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -22,46 +24,85 @@ public class StudentController {
         this.studentRepoI = studentRepoI;
     }
 
-    @GetMapping(value = {"list"})
+    @GetMapping(value = {"/list"})
     public String findallstudents(Model model){
         List<Student> allStud = studentRepoI.findAll();
-
+        int numberOfGirls = studentRepoI.fineNumberOfGirls();
+        int numberOfBoys = studentRepoI.fineNumberOfBoys();
         model.addAttribute("allstu", allStud);
+        model.addAttribute("numofgirls", numberOfGirls);
+        model.addAttribute("numofboys", numberOfBoys);
+        model.addAttribute("totalcount",numberOfBoys+numberOfGirls);
         return "list";
     }
-    @GetMapping(value = {"first"})
+    @GetMapping(value = {"/first"})
     public String firstgrade(Model model){
-        List<Student> firstgradestudents = studentRepoI.findFirstGrade();
-        log.warn(firstgradestudents.toString());
-
-        model.addAttribute("firstgrade", firstgradestudents);
-        return "first";
+        byGrade(model,1);
+        return "list";
     }
-    @GetMapping(value = {"second"})
+    @GetMapping(value = {"/second"})
     public String secondgrade(Model model){
-        List<Student> secondgradestudents = studentRepoI.findSecondGrade();
-        model.addAttribute("secondgrade", secondgradestudents);
-        return "second";
+        byGrade(model,2);
+        return "list";
     }
-    @GetMapping(value = {"third"})
+    @GetMapping(value = {"/third"})
     public String thirdgrade(Model model){
-        List<Student> thirdgradestudents = studentRepoI.findThirdGrade();
-        log.warn(thirdgradestudents.toString());
-
-        model.addAttribute("thirdgrade", thirdgradestudents);
-        return "third";
+     byGrade(model,3);
+        return "list";
     }
-    @GetMapping(value = {"fourth"})
+    @GetMapping(value = {"/fourth"})
     public String fourthgrade(Model model){
-        List<Student> fourthgradestudents = studentRepoI.findFourthGrade();
-        log.warn(fourthgradestudents.toString());
-
-        model.addAttribute("fourthgrade", fourthgradestudents);
-        return "fourth";
+    byGrade(model,4);
+        return "list";
     }
+    public void byGrade(Model model,int gradeLevel){
+        List<Student> students = studentRepoI.findByGrade(gradeLevel);
+        int numberOfBoys = studentRepoI.fineNumberOfBoysInGrade(gradeLevel);
+        int numberOfGirls = studentRepoI.fineNumberOfGirlsInGrade(gradeLevel);
+        //log.warn(fourthgradestudents.toString());
+
+        model.addAttribute("allstu", students);
+        model.addAttribute("numofgirls", numberOfGirls);
+        model.addAttribute("numofboys", numberOfBoys);
+        model.addAttribute("totalcount",numberOfBoys+numberOfGirls);
+
+    }
+
+
+
+    @GetMapping(value = {"/birthdaystoday"})
+    public String birthday(Model model){
+        List<Student> birthdaysToday = studentRepoI.birhthdaysToday();
+        //log.warn(birthdaysToday.toString());
+
+        model.addAttribute("allstu", birthdaysToday);
+        return "birthdaystoday";
+    }
+
+
     @ResponseBody
-    @GetMapping("getAllStudents")
+    @GetMapping("/getAllStudents")
     public List<Student> getAllStudents(){
         return studentRepoI.findAll();
     }
+
+    @GetMapping("/studentform")
+    public String studentForm(Model model){
+        model.addAttribute("student", new Student());
+
+        log.warn("student form method");
+        return "studentform";
+    }
+
+    @PostMapping("/s")
+    public String studentProcess(@ModelAttribute("student") Student students){
+        log.warn("student process method" + students);
+        log.warn(students.toString());
+        studentRepoI.save(students);
+        return "studentform";
+    }
+
+
+
+
 }

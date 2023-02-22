@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div th:fragment="girlboycount">
+        <table 
+          class="col-4 table align-content-center"
+          style="color: blanchedalmond"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Number of Girls</th>
+              <th scope="col">Number of Boys</th>
+              <th scope="col">Total students</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" th:text="${numofgirls}"></th>
+              <td th:text="${numofboys}"></td>
+              <td th:text="${totalcount}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </body>
+</html>

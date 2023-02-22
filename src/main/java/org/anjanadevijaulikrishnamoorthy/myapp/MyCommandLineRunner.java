@@ -48,7 +48,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
     Student s1 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2015, 4, 5), 'M', 1));
+            LocalDate.now(), 'M', 1));
     Student s2 = (new Student("Sai", "Ram",
             LocalDate.of(2015, 5, 15), 'M', 1));
     Student s3 = (new Student("Kelly", "Duncan",
@@ -66,7 +66,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     Student s9 = (new Student("Vijaya", "Jeyaram",
             LocalDate.of(2014, 2, 11), 'M', 2));
     Student s10 = (new Student("Preetha", "Jai",
-            LocalDate.of(2014, 4, 24), 'M', 2));
+            LocalDate.now(), 'M', 2));
     Student s11 = (new Student("Gomathi", "Siva",
             LocalDate.of(2014, 7, 19), 'M', 2));
     Student s12 = (new Student("Sivaram", "Ganeshan",
@@ -94,7 +94,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     Student s23 = (new Student("Ganesh", "Venkat",
             LocalDate.of(2012, 4, 5), 'M', 4));
     Student s24 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2012, 4, 5), 'M', 4));
+            LocalDate.now(), 'M', 4));
     Student s25 = (new Student("Ganesh", "Venkat",
             LocalDate.of(2012, 4, 25), 'M', 4));
     Student s26 = (new Student("Ganesh", "Venkat",

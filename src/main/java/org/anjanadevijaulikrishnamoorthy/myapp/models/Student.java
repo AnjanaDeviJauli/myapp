@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -40,7 +41,18 @@ public class Student {
     @NonNull
     int grade;
 
-//    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @Transient
+    int age;
+
+    public int getAge() {
+        return Period.between(this.dob,LocalDate.now()).getYears();
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    //    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 //    @JoinTable(name = "student_courses",
 //            joinColumns = @JoinColumn(name = "course_id"),
 //    inverseJoinColumns = @JoinColumn(name="student_id"))
