@@ -26,8 +26,9 @@ public class Course {
     @NonNull
     @Column(name = "course_name",length = 48)
     String courseName;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    Set<StudentCourseScore> studentCourseScores = new LinkedHashSet<>();
+
+
+
 
 
 
@@ -44,9 +45,7 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name="course_id"))
     Set<Teachers> teachers = new LinkedHashSet<>();
 
-    public void addStudentCourseScore(StudentCourseScore studentcoursescore){
-        studentCourseScores.add(studentcoursescore);
-    }
+
 
     public void addTeachers(Teachers teacher){
         teachers.add(teacher);

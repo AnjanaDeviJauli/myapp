@@ -6,31 +6,27 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
-@Data
+
 @RequiredArgsConstructor
 //@AllArgsConstructor
 @Getter
 @Setter
 @Slf4j
 @Entity
-@Table(name = "student_course_score")
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class StudentCourseScore {
-    @Id
-    @Column(name ="student_course_score_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Score {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @ManyToOne
-    @JoinColumn(name = "student_id")
+
     @NonNull
+    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     Student student;
-    @ManyToOne
-    @JoinColumn(name = "course_id")
     @NonNull
+    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     Course course;
     @NonNull
-    int score;
-
+    double mark;
 
 
 }

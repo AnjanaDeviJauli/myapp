@@ -5,12 +5,12 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentCourseScoreRepoI;
+import org.anjanadevijaulikrishnamoorthy.myapp.dao.ScoreRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
+import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
-import org.anjanadevijaulikrishnamoorthy.myapp.models.StudentCourseScore;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,10 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 
 @Component
@@ -31,17 +28,20 @@ public class MyCommandLineRunner implements CommandLineRunner {
     final StudentRepoI studentRepoI;
     final CourseRepoI courseRepoI;
     final TeacherRepoI teacherRepoI;
-    final StudentCourseScoreRepoI studentCourseScoreRepoI;
+    final ScoreRepoI scoreRepoI;
+
 
     @Autowired
     public MyCommandLineRunner(StudentRepoI studentRepoI,
                                CourseRepoI courseRepoI,
                                TeacherRepoI teacherRepoI,
-                               StudentCourseScoreRepoI studentCourseScoreRepoI) {
+                               ScoreRepoI scoreRepoI
+                              ) {
         this.studentRepoI = studentRepoI;
         this.courseRepoI = courseRepoI;
         this.teacherRepoI = teacherRepoI;
-        this.studentCourseScoreRepoI = studentCourseScoreRepoI;
+        this.scoreRepoI=scoreRepoI;
+
     }
 
     @PostConstruct
@@ -120,11 +120,20 @@ public class MyCommandLineRunner implements CommandLineRunner {
    Course social = new Course("Social");
 
    courseRepoI.saveAll(List.of(math,science,social,language));
-//   Set<Course> courses = new TreeSet<>();
-//   courses.add(math);
-//   courses.add(science);
-//   courses.add(language);
-//   courses.add(social);
+
+
+        try {
+            Thread.sleep(2000);
+            Student s = studentRepoI.findById(1).get();
+            Course c= courseRepoI.findById(1).get();
+            //Get database connection, delete unused data from DB
+            Score s1m = new Score(s,c,70);
+           scoreRepoI.save(s1m);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
    Teachers t1 = new Teachers("Ashley","Minton",
            "ashley@gmail.com","ashleyminton","1234");
    Teachers t2 = new Teachers("Elizabeth","Watson",
@@ -142,32 +151,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
   language.addTeachers(t3);
   social.addTeachers(t4);
 
-   StudentCourseScore sc1m = new StudentCourseScore(s1,math,99);
-   StudentCourseScore sc1s = new StudentCourseScore(s1,science,99);
-   StudentCourseScore sc1o = new StudentCourseScore(s1,social,99);
-   StudentCourseScore sc1l = new StudentCourseScore(s1,language,99);
-   StudentCourseScore sc2m = new StudentCourseScore(s2,math,99);
-   StudentCourseScore sc2s = new StudentCourseScore(s2,science,99);
-   StudentCourseScore sc2o = new StudentCourseScore(s2,social,99);
-   StudentCourseScore sc2l = new StudentCourseScore(s2,language,99);
-   StudentCourseScore sc3m = new StudentCourseScore(s3,math,99);
-   StudentCourseScore sc3s = new StudentCourseScore(s3,science,99);
-   StudentCourseScore sc3o = new StudentCourseScore(s3,social,99);
-   StudentCourseScore sc3l = new StudentCourseScore(s3,language,99);
-   StudentCourseScore sc4m = new StudentCourseScore(s4,math,99);
-   StudentCourseScore sc4s = new StudentCourseScore(s4,science,99);
-   StudentCourseScore sc4o = new StudentCourseScore(s4,social,99);
-   StudentCourseScore sc4l = new StudentCourseScore(s4,language,99);
-   StudentCourseScore sc5m = new StudentCourseScore(s5,math,99);
-   StudentCourseScore sc5s = new StudentCourseScore(s5,science,99);
-   StudentCourseScore sc5o = new StudentCourseScore(s5,social,99);
-   StudentCourseScore sc5l = new StudentCourseScore(s5,language,99);
 
-   studentCourseScoreRepoI.saveAll(List.of(sc1m,sc1o,sc1l,sc1s,
-           sc2m,sc2o,sc2l,sc2s,
-           sc3m,sc3o,sc3l,sc3s,
-           sc4m,sc4o,sc4l,sc4s,
-           sc5m,sc5o,sc5l,sc5s));
 
 
 

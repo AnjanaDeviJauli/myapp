@@ -41,6 +41,7 @@ public class Student {
     @NonNull
     int grade;
 
+
     @Transient
     int age;
 
@@ -52,20 +53,7 @@ public class Student {
         this.age = age;
     }
 
-    //    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    @JoinTable(name = "student_courses",
-//            joinColumns = @JoinColumn(name = "course_id"),
-//    inverseJoinColumns = @JoinColumn(name="student_id"))
-//    Set<Student> courses = new LinkedHashSet<>();
 
-//    @ToString.Exclude
-//    @ManyToMany(fetch = FetchType.EAGER,
-//            cascade = {CascadeType.PERSIST,
-//                    CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    @JoinTable(name = "student_teachers",
-//            joinColumns = @JoinColumn(name = "teacher_id"),
-//            inverseJoinColumns = @JoinColumn(name="student_id"))
-//    Set<Teacher> teachers = new LinkedHashSet<>();
 
 
 
