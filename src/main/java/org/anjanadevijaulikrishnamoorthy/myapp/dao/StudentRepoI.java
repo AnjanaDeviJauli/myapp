@@ -16,6 +16,9 @@ public interface StudentRepoI extends JpaRepository<Student,Integer> {
     @Query("SELECT S FROM Student S WHERE S.grade=?1")
     List<Student> findByGrade(int grade);
 
+    @Query("SELECT S FROM Student S WHERE S.firstName=?1")
+    List<Student> findByGrade(String firstName);
+
 
 
     @Query("SELECT count(S.gender) fROM Student S where S.gender='M'")
@@ -33,4 +36,9 @@ public interface StudentRepoI extends JpaRepository<Student,Integer> {
 
     @Query("SELECT S FROM Student S WHERE S.dob=current_date")
     List<Student>  birhthdaysToday();
+
+//    @Query("SELECT S FROM Student S WHERE S.firstName=?1 OR S.lastName=?2")
+//    Student  getStudent(String firstName, String lastName);
+//
+//    Student  getStudentById(int id);
 }

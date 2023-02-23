@@ -9,10 +9,7 @@ import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Slf4j
@@ -101,6 +98,22 @@ public class StudentController {
         studentRepoI.save(students);
         return "studentform";
     }
+//    @GetMapping("/search")
+//    public String requestParam(@RequestParam(value = "id") int id,Model model){
+//       Student student= studentRepoI.getStudentById(id);
+//        model.addAttribute("allstu", student);
+//        return "list";
+//    }
+//
+//    @GetMapping("/search")
+//    public String requestParama(@RequestParam(value = "firstName") String firstName,
+//                               @RequestParam(value = "lastName") String lastName,Model model){
+//        Student student = studentRepoI.getStudent(firstName,lastName);
+//        model.addAttribute("allstu", student);
+//        return "birthdaystoday";
+//    }
+
+
 
 
 
