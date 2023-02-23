@@ -47,6 +47,9 @@ public class Teachers {
 //    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 //    Set<Student> students = new LinkedHashSet<>();
 
+    public void addCourses(Course course){
+        courses.add(course);
+    }
 
 
 }

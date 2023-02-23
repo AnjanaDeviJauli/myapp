@@ -44,6 +44,16 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name="course_id"))
     Set<Teachers> teachers = new LinkedHashSet<>();
 
+    public void addStudentCourseScore(StudentCourseScore studentcoursescore){
+        studentCourseScores.add(studentcoursescore);
+    }
+
+    public void addTeachers(Teachers teacher){
+        teachers.add(teacher);
+        teacher.getCourses().add(this);
+    }
+
+
 
 
 

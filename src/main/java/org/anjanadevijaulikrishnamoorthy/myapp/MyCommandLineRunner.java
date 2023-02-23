@@ -18,7 +18,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 @Component
@@ -117,7 +120,11 @@ public class MyCommandLineRunner implements CommandLineRunner {
    Course social = new Course("Social");
 
    courseRepoI.saveAll(List.of(math,science,social,language));
-
+//   Set<Course> courses = new TreeSet<>();
+//   courses.add(math);
+//   courses.add(science);
+//   courses.add(language);
+//   courses.add(social);
    Teachers t1 = new Teachers("Ashley","Minton",
            "ashley@gmail.com","ashleyminton","1234");
    Teachers t2 = new Teachers("Elizabeth","Watson",
@@ -130,6 +137,10 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 "vathsala@gmail.com","vathsalasuresh","1234");
 
    teacherRepoI.saveAll(List.of(t1,t2,t3,t4,t5));
+  math.addTeachers(t1);
+  science.addTeachers(t2);
+  language.addTeachers(t3);
+  social.addTeachers(t4);
 
    StudentCourseScore sc1m = new StudentCourseScore(s1,math,99);
    StudentCourseScore sc1s = new StudentCourseScore(s1,science,99);

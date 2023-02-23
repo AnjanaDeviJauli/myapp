@@ -46,10 +46,15 @@
           <a class="btn btn-outline-success my-2 my-sm-0" href="index.html"  type="button">Logout</a>
         </form>
       </nav>
-      <form class="form-inline offset-10" method="get" action="/search">
+      <div class="row">
+      <div class="col-4 offset-4">
+        <div th:replace="fragrams/girlboycount :: girlboycount" />
+      </div>
+      <form class="form-inline col-2 mx-12" method="get" action="/search">
         <input class="form-control mr-sm-2" type="search" name="id|firstName|lastName" placeholder="Search" aria-label="Search">
         <button style="background-color: blanchedalmond;" class="btn btn-outline-success my-2 my-sm-0" id="buttons" type="submit">Go</button>
       </form>
+    </div>
     </div>
     
 </body>
