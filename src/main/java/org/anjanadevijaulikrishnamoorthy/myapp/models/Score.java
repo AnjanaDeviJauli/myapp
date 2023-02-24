@@ -18,12 +18,12 @@ public class Score {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "student_student_id")
     @NonNull
     //@OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     Student student;
-    @ManyToOne
+    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "course_course_id")
     @NonNull
     //@OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
