@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 @Slf4j
@@ -30,6 +32,7 @@ public class StudentController {
         model.addAttribute("numofgirls", numberOfGirls);
         model.addAttribute("numofboys", numberOfBoys);
         model.addAttribute("totalcount",numberOfBoys+numberOfGirls);
+        model.addAttribute("grade", "All Students");
         return "list";
     }
     @GetMapping(value = {"/first"})
@@ -62,11 +65,17 @@ public class StudentController {
         model.addAttribute("numofgirls", numberOfGirls);
         model.addAttribute("numofboys", numberOfBoys);
         model.addAttribute("totalcount",numberOfBoys+numberOfGirls);
+        if(gradeLevel==1){
+            model.addAttribute("grade", "First Grade Students");
+        }else if(gradeLevel==2){
+            model.addAttribute("grade", "Second Grade Students");
+        }else if(gradeLevel==3){
+            model.addAttribute("grade", "Third Grade Students");
+        }else if(gradeLevel==4){
+            model.addAttribute("grade", "Fourth Grade Students");
+        }
 
     }
-
-
-
     @GetMapping(value = {"/birthdaystoday"})
     public String birthday(Model model){
         List<Student> birthdaysToday = studentRepoI.birhthdaysToday();
@@ -112,6 +121,35 @@ public class StudentController {
 //        model.addAttribute("allstu", student);
 //        return "birthdaystoday";
 //    }
+@PostMapping("/findstudentbyId")
+public String findStudentById(@RequestParam(required = false) int id, Model model){
+
+    try {
+        model.addAttribute("stu", studentRepoI.findById(id).get());
+        log.warn(studentRepoI.findById(id).get().toString());
+    } catch (RuntimeException ex){
+        ex.printStackTrace();
+        model.addAttribute("user_not_found",String.format("Username: %d not found!",id));
+        return ("studentfind");
+    }
+    return "studentfind";
+}
+
+    @PostMapping("/findstudentbyName")
+    public String findStudentByName(@RequestParam(name="firstName") String firstName,
+                              @RequestParam(name="lastName") String lastName,Model model){
+      int id =studentRepoI.findByFirstNameAndLastName(firstName,lastName).getId();
+
+        try {
+            model.addAttribute("stu",  studentRepoI.findById(id).get());
+            log.warn(studentRepoI.findByFirstNameAndLastName(firstName,lastName).toString());
+        } catch (RuntimeException ex){
+            ex.printStackTrace();
+            model.addAttribute("user_not_found",String.format("Username: %s  %s not found!",firstName,lastName));
+            return ("studentfind");
+        }
+        return "studentfind";
+    }
 
 
 

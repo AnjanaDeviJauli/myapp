@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.ScoreRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
@@ -19,22 +17,17 @@ import java.util.NoSuchElementException;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Transactional(rollbackOn = {DataAccessException.class})
 public class TeacherService {
-    StudentRepoI studentRepoI;
     CourseRepoI courseRepoI;
      TeacherRepoI teacherRepoI;
-     ScoreRepoI scoreRepoI;
 
 
     @Autowired
-    public TeacherService(StudentRepoI studentRepoI,
-                          CourseRepoI courseRepoI,
-                          TeacherRepoI teacherRepoI,
-                          ScoreRepoI scoreRepoI
+    public TeacherService(CourseRepoI courseRepoI,
+                          TeacherRepoI teacherRepoI
     ) {
-        this.studentRepoI = studentRepoI;
         this.courseRepoI = courseRepoI;
         this.teacherRepoI = teacherRepoI;
-        this.scoreRepoI=scoreRepoI;
+
 
     }
 

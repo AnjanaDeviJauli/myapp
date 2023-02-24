@@ -60,61 +60,61 @@ public class MyCommandLineRunner implements CommandLineRunner {
     Student s2 = (new Student("Sai", "Ram",
             LocalDate.of(2015, 5, 15), 'M', 1));
     Student s3 = (new Student("Kelly", "Duncan",
-            LocalDate.of(2015, 4, 20), 'M', 1));
-    Student s4 = (new Student("Ashley", "Minton",
-            LocalDate.of(2015, 6, 27), 'M', 1));
+            LocalDate.of(2015, 4, 20), 'F', 1));
+    Student s4 = (new Student("Ashley", "Manton",
+            LocalDate.of(2015, 6, 27), 'F', 1));
     Student s5 = (new Student("Mathew", "Mark",
             LocalDate.of(2015, 2, 22), 'M', 1));
     Student s6 = (new Student("Aarthi", "Jeeva",
-            LocalDate.of(2015, 1, 11), 'M', 1));
+            LocalDate.of(2015, 1, 11), 'F', 1));
     Student s7 = (new Student("Karhika", "Satis",
-            LocalDate.of(2015, 2, 6), 'M', 1));
+            LocalDate.of(2015, 2, 6), 'F', 1));
     Student s8 = (new Student("Vignesh", "Vela",
             LocalDate.of(2014, 12, 5), 'M', 2));
     Student s9 = (new Student("Vijaya", "Jeyaram",
-            LocalDate.of(2014, 2, 11), 'M', 2));
+            LocalDate.of(2014, 2, 11), 'F', 2));
     Student s10 = (new Student("Preetha", "Jai",
-            LocalDate.now(), 'M', 2));
+            LocalDate.now(), 'F', 2));
     Student s11 = (new Student("Gomathi", "Siva",
-            LocalDate.of(2014, 7, 19), 'M', 2));
+            LocalDate.of(2014, 7, 19), 'F', 2));
     Student s12 = (new Student("Sivaram", "Ganeshan",
             LocalDate.of(2014, 9, 6), 'M', 2));
     Student s13 = (new Student("Sally", "Bray",
-            LocalDate.of(2014, 3, 14), 'M', 2));
+            LocalDate.of(2014, 3, 14), 'F', 2));
     Student s14 = (new Student("Laura", "King",
-            LocalDate.of(2014, 1, 18), 'M', 2));
-    Student s15 = (new Student("Kevin", "Venkat",
+            LocalDate.of(2014, 1, 18), 'F', 2));
+    Student s15 = (new Student("Kevin", "Ven",
             LocalDate.of(2013, 4, 15), 'M', 3));
-    Student s16 = (new Student("Ganesh", "Venkat",
+    Student s16 = (new Student("Balaji", "Sundar",
             LocalDate.of(2013, 2, 5), 'M', 3));
-    Student s17 = (new Student("Ganesh", "Venkat",
+    Student s17 = (new Student("Gandhi", "Mohan",
             LocalDate.of(2013, 1, 6), 'M', 3));
-    Student s18 = (new Student("Ganesh", "Venkat",
+    Student s18 = (new Student("Harry", "Potter",
             LocalDate.of(2013, 6, 8), 'M', 3));
-    Student s19 = (new Student("Ganesh", "Venkat",
+    Student s19 = (new Student("Nick", "Sammy",
             LocalDate.of(2013, 8, 12), 'M', 3));
-    Student s20 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2013, 9, 14), 'M', 3));
-    Student s21 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2013, 10, 5), 'M', 3));
-    Student s22 = (new Student("Ganesh", "Venkat",
+    Student s20 = (new Student("Olivia", "Vest",
+            LocalDate.of(2013, 9, 14), 'F', 3));
+    Student s21 = (new Student("Angela", "Brown",
+            LocalDate.of(2013, 10, 5), 'F', 3));
+    Student s22 = (new Student("Ella", "Campbell",
+            LocalDate.of(2012, 4, 5), 'F', 4));
+    Student s23 = (new Student("Brian", "Baker",
             LocalDate.of(2012, 4, 5), 'M', 4));
-    Student s23 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2012, 4, 5), 'M', 4));
-    Student s24 = (new Student("Ganesh", "Venkat",
+    Student s24 = (new Student("Austin", "Butler",
             LocalDate.now(), 'M', 4));
-    Student s25 = (new Student("Ganesh", "Venkat",
+    Student s25 = (new Student("Charles", "Davies",
             LocalDate.of(2012, 4, 25), 'M', 4));
-    Student s26 = (new Student("Ganesh", "Venkat",
+    Student s26 = (new Student("Alex", "Clark",
             LocalDate.of(2012, 1, 15), 'M', 4));
-    Student s27 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2012, 2, 7), 'M', 4));
-    Student s28 = (new Student("Ganesh", "Venkat",
+    Student s27 = (new Student("Erica", "Black",
+            LocalDate.of(2012, 2, 7), 'F', 4));
+    Student s28 = (new Student("Eric", "Baker",
             LocalDate.of(2012, 3, 2), 'M', 4));
-    Student s29 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2012, 5, 2), 'M', 4));
-    Student s30 = (new Student("Ganesh", "Venkat",
-            LocalDate.of(2012, 9, 1), 'M', 4));
+    Student s29 = (new Student("Amanda", "Coleman",
+            LocalDate.of(2012, 5, 2), 'F', 4));
+    Student s30 = (new Student("Ella", "Bond",
+            LocalDate.of(2012, 9, 1), 'F', 4));
    studentRepoI.saveAll(List.of(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,
            s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,
            s29,s30));
