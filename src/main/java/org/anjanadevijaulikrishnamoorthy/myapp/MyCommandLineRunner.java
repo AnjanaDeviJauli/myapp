@@ -12,6 +12,7 @@ import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
+import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,12 +20,14 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Component
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MyCommandLineRunner implements CommandLineRunner {
+    final TeacherService teacherService;
     final StudentRepoI studentRepoI;
     final CourseRepoI courseRepoI;
     final TeacherRepoI teacherRepoI;
@@ -35,12 +38,14 @@ public class MyCommandLineRunner implements CommandLineRunner {
     public MyCommandLineRunner(StudentRepoI studentRepoI,
                                CourseRepoI courseRepoI,
                                TeacherRepoI teacherRepoI,
-                               ScoreRepoI scoreRepoI
+                               ScoreRepoI scoreRepoI,
+                               TeacherService teacherService
                               ) {
         this.studentRepoI = studentRepoI;
         this.courseRepoI = courseRepoI;
         this.teacherRepoI = teacherRepoI;
         this.scoreRepoI=scoreRepoI;
+        this.teacherService=teacherService;
 
     }
 
@@ -122,16 +127,18 @@ public class MyCommandLineRunner implements CommandLineRunner {
    courseRepoI.saveAll(List.of(math,science,social,language));
 
 
-        try {
-            Thread.sleep(2000);
-            Student s = studentRepoI.findById(1).get();
-            Course c= courseRepoI.findById(1).get();
-            //Get database connection, delete unused data from DB
-            Score s1m = new Score(s,c,70);
-           scoreRepoI.save(s1m);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+
+//        try {
+//            Thread.sleep(2000);
+//            Student s = studentRepoI.findById(1).get();
+//            Course c= courseRepoI.findById(1).get();
+//            //Get database connection, delete unused data from DB
+//            Score s1m = new Score(s,c,70);
+//           scoreRepoI.save(s1m);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
 
    Teachers t1 = new Teachers("Ashley","Minton",
@@ -146,12 +153,25 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 "vathsala@gmail.com","vathsalasuresh","1234");
 
    teacherRepoI.saveAll(List.of(t1,t2,t3,t4,t5));
-  math.addTeachers(t1);
-  science.addTeachers(t2);
-  language.addTeachers(t3);
-  social.addTeachers(t4);
 
+        teacherRepoI.saveAll(List.of(t1,t2,t3,t4));
 
+        double doub_value = 70.00;
+        scoreRepoI.save(new Score(s1,science,doub_value));
+
+        try {
+            teacherService.addCourse(1,math);
+            teacherService.addCourse(2,science);
+            teacherService.addCourse(3,language);
+            teacherService.addCourse(4,social);
+
+        } catch (NoSuchElementException ex){
+            log.error("Couldn't add course to student!");
+            ex.printStackTrace();
+        } catch (RuntimeException e){
+            log.error("Couldn't add courses!");
+            e.printStackTrace();
+        }
 
 
 

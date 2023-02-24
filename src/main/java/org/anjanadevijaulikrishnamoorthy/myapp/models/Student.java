@@ -8,12 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @NoArgsConstructor
-@Data
+@ToString
 @RequiredArgsConstructor
 //@AllArgsConstructor
 @Getter

@@ -9,9 +9,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-@Data
+@ToString
 @RequiredArgsConstructor
-//@AllArgsConstructor
 @Getter
 @Setter
 @Slf4j
@@ -24,13 +23,8 @@ public class Course {
     @Column(name = "course_id")
     int id;
     @NonNull
-    @Column(name = "course_name",length = 48)
+    @Column(name = "course_name", length = 48)
     String courseName;
-
-
-
-
-
 
 //    @ToString.Exclude
 //    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "courses",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
@@ -42,16 +36,8 @@ public class Course {
                     CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "teacher_courses",
             joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name="course_id"))
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
     Set<Teachers> teachers = new LinkedHashSet<>();
-
-
-
-    public void addTeachers(Teachers teacher){
-        teachers.add(teacher);
-        teacher.getCourses().add(this);
-    }
-
 
 
 
