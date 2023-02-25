@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 @Slf4j
 @Controller
+@RequestMapping(value = "students")
 public class StudentController {
     StudentRepoI studentRepoI;
     @Autowired

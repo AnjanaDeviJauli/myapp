@@ -25,7 +25,7 @@
                   <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
                       <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Student Registration Form </h3>
-                      <form id="myform" method="post" name="myForm"  th:action="@{/savestudent}" th:object="${student}">
+                      <form id="myform" method="post" name="myForm"  th:action="@{/students/savestudent}" th:object="${student}">
                         <!-- <div class="row-md-6 mb-4 form-outline">
                             <input type="number" id="rollNumber" disabled  class="form-control form-control-lg"  th:text="${student.id}" />
                             <label class="form-label" for="rollNumber"><strong>Roll number</strong> </label>

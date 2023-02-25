@@ -164,6 +164,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
             teacherService.addCourse(2,science);
             teacherService.addCourse(3,language);
             teacherService.addCourse(4,social);
+            teacherService.addCourse(1,science);
+
 
         } catch (NoSuchElementException ex){
             log.error("Couldn't add course to student!");

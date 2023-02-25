@@ -12,6 +12,7 @@ import java.util.Set;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @ToString
 //@AllArgsConstructor
 @Getter
