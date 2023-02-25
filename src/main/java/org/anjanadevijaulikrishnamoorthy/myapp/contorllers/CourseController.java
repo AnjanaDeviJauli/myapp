@@ -27,7 +27,7 @@ public class CourseController {
     //Course form
     //Create course object
     @GetMapping("/courseform")
-    public String studentForm(Model model){
+    public String courseForm(Model model){
         model.addAttribute("course", new Course());
 
         log.warn("course form method");
@@ -35,7 +35,7 @@ public class CourseController {
     }
     //save course object by getting values from course form
     @PostMapping("/savecourse")
-    public String studentProcess(@ModelAttribute("course") Course course){
+    public String courseProcess(@ModelAttribute("course") Course course){
         log.warn("course process method" + course);
         //log.warn(students.toString());
         courseRepoI.save(course);

@@ -5,7 +5,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -39,11 +41,24 @@ public class Teachers {
     @Column(length = 48)
     String password;
 
+
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     Set<Course> courses = new LinkedHashSet<>();
 
-//    @ToString.Exclude
+    public List<String> getCourses() {
+        List<String> course= new ArrayList<>();
+        for (Course c:courses){
+            course.add(c.getCourseName());
+        }
+        return course;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    //    @ToString.Exclude
 //    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 //    Set<Student> students = new LinkedHashSet<>();
 

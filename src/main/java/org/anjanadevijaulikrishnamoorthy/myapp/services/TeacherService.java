@@ -6,13 +6,17 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
+import org.anjanadevijaulikrishnamoorthy.myapp.dto.TeacherDTO;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 @Service @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Transactional(rollbackOn = {DataAccessException.class})
@@ -30,7 +34,7 @@ public class TeacherService {
 
 
     }
-
+    //adding course to teacher
     @Transactional(rollbackOn = {NoSuchElementException.class})
     public void addCourse(Integer id, Course c) throws NoSuchElementException{
 
@@ -38,5 +42,19 @@ public class TeacherService {
         c = courseRepoI.save(c);
         t.addCourses(c);
         teacherRepoI.save(t);
+    }
+
+    public List<TeacherDTO> getTeachersEssInfo(){
+
+        return teacherRepoI
+                .findAll()
+                .stream()
+                .map((oneTeacher)-> {
+                    return new TeacherDTO(oneTeacher.getId(),oneTeacher.getFirstNameT(), oneTeacher.getLastNameT(),
+                    oneTeacher.getEmail(),oneTeacher.getUsername(),oneTeacher.getCourses());
+                })
+                .collect(Collectors.toList());
+//
+//
     }
 }
