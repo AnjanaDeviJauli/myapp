@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.anjanadevijaulikrishnamoorthy.myapp.dto.TeacherDTO;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -16,15 +19,15 @@ import java.util.Set;
 @Slf4j
 @Entity
 @Table(name = "courses")
-@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
-    int id;
+    private int id;
     @NonNull
     @Column(name = "course_name", length = 48)
-    String courseName;
+    private String courseName;
 
 //    @ToString.Exclude
 //    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "courses",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
@@ -40,6 +43,21 @@ public class Course {
     Set<Teachers> teachers = new LinkedHashSet<>();
 
 
+//    public Set<TeacherDTO> getTeacherDTO() {
+//        Set<TeacherDTO> teacher= new LinkedHashSet<>();
+//        for (Teachers t:teachers){
+//            teacher.add(new TeacherDTO(t.getId(),t.getFirstNameT(),t.getLastNameT(),t.getEmail(),t.getUsername(),t.getCourses()));
+//        }
+//        return teacher;
+//
+//    }
 
 
-}
+    }
+
+
+
+
+
+
+

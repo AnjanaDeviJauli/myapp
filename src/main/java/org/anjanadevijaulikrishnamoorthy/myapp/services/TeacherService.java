@@ -57,4 +57,14 @@ public class TeacherService {
 //
 //
     }
+    public List<TeacherDTO> getTeacherDetailsForCourse(Course c){
+        return courseRepoI
+                .findTeacherAssignedToCourse(c.getId())
+                .stream()
+                .map((oneTeacher)-> {
+                    return new TeacherDTO(oneTeacher.getId(),oneTeacher.getFirstNameT(), oneTeacher.getLastNameT(),
+                            oneTeacher.getEmail(),oneTeacher.getUsername(),oneTeacher.getCourses());
+                })
+                .collect(Collectors.toList());
+    }
 }

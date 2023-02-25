@@ -3,7 +3,9 @@ package org.anjanadevijaulikrishnamoorthy.myapp.dto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
+import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,25 +15,18 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherDTO {
-
+public class CourseDTO {
     int id;
-    String firstNameT;
+    String courseName;
 
-    String lastNameT;
-
-    String email;
-
-    String username;
-    List<String> courses;
+    List<TeacherDTO> teachers;
 
     @Override
     public String toString() {
-        return
+        return "CourseDTO{" +
                 "id=" + id +
-                ", firstNameT='" + firstNameT + '\'' +
-                ", lastNameT='" + lastNameT + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' ;
+                ", courseName='" + courseName + '\'' +
+                ", teachers=" + teachers +
+                '}';
     }
 }

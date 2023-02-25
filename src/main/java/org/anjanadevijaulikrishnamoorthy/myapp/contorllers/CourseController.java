@@ -2,8 +2,11 @@ package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
+import org.anjanadevijaulikrishnamoorthy.myapp.dto.CourseDTO;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 
+import org.anjanadevijaulikrishnamoorthy.myapp.services.CourseService;
+import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +22,11 @@ public class CourseController {
 
 
     CourseRepoI courseRepoI;
+    CourseService courseService;
     @Autowired
-    public CourseController(CourseRepoI courseRepoI) {
+    public CourseController(CourseRepoI courseRepoI,CourseService courseService) {
         this.courseRepoI = courseRepoI;
+        this.courseService =courseService;
     }
 
     //Course form
@@ -46,7 +51,7 @@ public class CourseController {
     //Display available course to front end
     @GetMapping(value = {"/courselist"})
     public String findallcourses(Model model){
-        List<Course> courses = courseRepoI.findAll();
+        List<CourseDTO> courses = courseService.getCourseEssInfo();
 
         model.addAttribute("allcourses", courses);
         return "courselist";

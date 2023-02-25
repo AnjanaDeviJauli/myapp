@@ -40,8 +40,6 @@ public class Teachers {
     @NonNull
     @Column(length = 48)
     String password;
-
-
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     Set<Course> courses = new LinkedHashSet<>();
@@ -58,9 +56,6 @@ public class Teachers {
         this.courses = courses;
     }
 
-    //    @ToString.Exclude
-//    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    Set<Student> students = new LinkedHashSet<>();
 
     public void addCourses(Course course) {
         courses.add(course);
