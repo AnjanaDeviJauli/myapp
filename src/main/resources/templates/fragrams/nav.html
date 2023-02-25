@@ -9,58 +9,22 @@
 </head>
 <body>
   <div th:fragment="nav">
-  <a id="logo" href="search.html">
-    <div class="logo"></div>
-    </a>
-<center>
-    <h1 style="color:blanchedalmond;font-size:60px;">Great Elementary School</h1> </center>
-    <nav  class="navbar navbar-expand-lg navbar-light justify-content-between ">
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class=" navbar-collapse" id="navbarNav">
-          <div class="navbar-nav">
-              <a class=" nav-item nav-link" th:href="@{search}">Home</a>
-            <a class="nav-item nav-link" th:href="@{studentform}">Register Student</a>
-            <a class="nav-item nav-link" th:href="@{birthdaystoday}">Birthdays today</a>
-            <a class="nav-item nav-link" th:href="@{fourth}">Register Course</a>
-            <a class="nav-item nav-link" th:href="@{list}">All students</a>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Students
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" th:href="@{first}">First Grade</a></li>
-                <li><a class="dropdown-item" th:href="@{second}">Second Grade</a></li>
-                <li><a class="dropdown-item" th:href="@{third}">Third Grade</a></li>
-                <li><a class="dropdown-item" th:href="@{fourth}">Fourth Grade</a></li>
-                <li><a class="dropdown-item" th:href="@{list}">All students</a></li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-       <form class="form-inline nav-item ">
-
-          <a class="btn btn-outline-success my-2 my-sm-0" href="index.html"  type="button">Logout</a>
-        </form>
-      </nav>
-      <div class="row">
-      <div class="col-4 offset-4">
+    <div th:replace="fragrams/onlynav :: onlynav" />
+      <div class="row my-2">
+      <div class="col-4 ">
         <div th:replace="fragrams/girlboycount :: girlboycount" />
       </div>
-      <form class="form-inline col-2 mx-12" method="post" action="/findstudentbyId">
-        <input class="form-control mr-sm-2" type="search" name="id" placeholder="First by id" aria-label="Search" required>
-        <button style="background-color: blanchedalmond;" class="btn btn-outline-success my-2 my-sm-0" id="buttons" type="submit">Go</button>
-      </form>
+      <form class="form-inline col-2 offset-4 mx-12" method="post" action="/findstudentbyId">
+          <input class="form-control mr-sm-2" type="search" name="id" placeholder="First by id" aria-label="Search" required>
+          <button style="background-color: blanchedalmond;" class="btn btn-outline-success my-2 my-sm-0" id="buttons" type="submit">Go</button>
+        </form>
       <form class="form-inline col-2 mx-12" method="post" action="/findstudentbyName">
-        <input class="form-control mr-sm-2" type="search" name="firstName" placeholder="Enter first name" aria-label="Search" required>
-        <input class="form-control mr-sm-2" type="search" name="lastName" placeholder="Enter last name" aria-label="Search" required>
-        <button style="background-color: blanchedalmond;" class="btn btn-outline-success my-2 my-sm-0" id="buttons" type="submit">Go</button>
-      </form>
+          <input class="form-control mr-sm-2" type="search" name="firstName" placeholder="Enter first name" aria-label="Search" required>
+          <input class="form-control mr-sm-2" type="search" name="lastName" placeholder="Enter last name" aria-label="Search" required>
+          <button style="background-color: blanchedalmond;" class="btn btn-outline-success my-2 my-sm-0" id="buttons" type="submit">Go</button>
+        </form>
     </div>
     </div>
-    
+
 </body>
 </html>

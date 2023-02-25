@@ -23,6 +23,7 @@ public class StudentController {
         this.studentRepoI = studentRepoI;
     }
 
+    //Display all studentd to front end
     @GetMapping(value = {"/list"})
     public String findallstudents(Model model){
         List<Student> allStud = studentRepoI.findAll();
@@ -79,6 +80,7 @@ public class StudentController {
     @GetMapping(value = {"/birthdaystoday"})
     public String birthday(Model model){
         List<Student> birthdaysToday = studentRepoI.birhthdaysToday();
+
         //log.warn(birthdaysToday.toString());
 
         model.addAttribute("allstu", birthdaysToday);
@@ -91,7 +93,8 @@ public class StudentController {
     public List<Student> getAllStudents(){
         return studentRepoI.findAll();
     }
-
+    //Student form
+    //Create student object
     @GetMapping("/studentform")
     public String studentForm(Model model){
         model.addAttribute("student", new Student());
@@ -99,28 +102,15 @@ public class StudentController {
         log.warn("student form method");
         return "studentform";
     }
-
-    @PostMapping("/s")
+    //Save student object from student form
+    @PostMapping("/savestudent")
     public String studentProcess(@ModelAttribute("student") Student students){
         log.warn("student process method" + students);
         //log.warn(students.toString());
         studentRepoI.save(students);
         return "studentform";
     }
-//    @GetMapping("/search")
-//    public String requestParam(@RequestParam(value = "id") int id,Model model){
-//       Student student= studentRepoI.getStudentById(id);
-//        model.addAttribute("allstu", student);
-//        return "list";
-//    }
-//
-//    @GetMapping("/search")
-//    public String requestParama(@RequestParam(value = "firstName") String firstName,
-//                               @RequestParam(value = "lastName") String lastName,Model model){
-//        Student student = studentRepoI.getStudent(firstName,lastName);
-//        model.addAttribute("allstu", student);
-//        return "birthdaystoday";
-//    }
+
 @PostMapping("/findstudentbyId")
 public String findStudentById(@RequestParam(required = false) int id, Model model){
 

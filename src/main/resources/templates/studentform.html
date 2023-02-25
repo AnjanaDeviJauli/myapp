@@ -13,44 +13,8 @@
 <body>
 <div>
   
-    <a id="logo" href="search.html">
-      <div class="logo"></div>
-      </a>
-  <center>
-      <h1 style="color:blanchedalmond;font-size:60px;">Great Elementary School</h1> </center>
-      <nav  class="navbar navbar-expand-lg navbar-light justify-content-between ">
   
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class=" navbar-collapse" id="navbarNav">
-            <div class="navbar-nav">
-                <a class=" nav-item nav-link" th:href="@{search}">Home</a>
-              <a class="nav-item nav-link" th:href="@{studentform}">Register Student</a>
-              <a class="nav-item nav-link" th:href="@{birthdaystoday}">Birthdays today</a>
-              <a class="nav-item nav-link" th:href="@{fourth}">Register Course</a>
-              <a class="nav-item nav-link" th:href="@{list}">All students</a>
-              <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  Students
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" th:href="@{first}">First Grade</a></li>
-                  <li><a class="dropdown-item" th:href="@{second}">Second Grade</a></li>
-                  <li><a class="dropdown-item" th:href="@{third}">Third Grade</a></li>
-                  <li><a class="dropdown-item" th:href="@{fourth}">Fourth Grade</a></li>
-                  <li><a class="dropdown-item" th:href="@{list}">All students</a></li>
-                </ul>
-              </div>
-  
-            </div>
-          </div>
-         <form class="form-inline nav-item ">
-  
-            <a class="btn btn-outline-success my-2 my-sm-0" href="index.html"  type="button">Logout</a>
-          </form>
-        </nav>
-  
+  <div th:replace="fragrams/onlynav :: onlynav" />
       
 </div>
 
@@ -60,8 +24,8 @@
                 <div class="col-12 col-lg-9 col-xl-7">
                   <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
-                      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form </h3>
-                      <form id="myform" method="post" name="myForm"  th:action="@{/s}" th:object="${student}">
+                      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Student Registration Form </h3>
+                      <form id="myform" method="post" name="myForm"  th:action="@{/savestudent}" th:object="${student}">
                         <!-- <div class="row-md-6 mb-4 form-outline">
                             <input type="number" id="rollNumber" disabled  class="form-control form-control-lg"  th:text="${student.id}" />
                             <label class="form-label" for="rollNumber"><strong>Roll number</strong> </label>
@@ -105,7 +69,7 @@
                             <div class="form-outline datepicker w-100">
                               <input type="date"
                                      class="form-control form-control-lg"
-                                     min="2010-01-01"
+                                     min="2020-01-01"
                                      max="2024-12-31"
                                      title="Enter valid date of birth"
                                      id="dob"

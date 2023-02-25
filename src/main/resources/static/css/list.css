@@ -10,14 +10,14 @@ body {
   
 }
   .logo {
-    background-image: url("https://www.graphicsprings.com/filestorage/stencils/aea126a28feb00b996ef0ccf47171221.svg");
+    /* background-image: url("https://www.graphicsprings.com/filestorage/stencils/aea126a28feb00b996ef0ccf47171221.svg");
     background-repeat: no-repeat;
-    background-size: cover;
-    
+    background-size: cover; */
+/*     
     padding: 0px;
-    margin: 0px;
-    width: 50px;
-    height: 50px;
+    margin: 0px; */
+    width: 16px;
+    height: 16px;
   }
  nav{
   background-color: blanchedalmond;
@@ -26,4 +26,7 @@ body {
  .navbar-brand{
    border-color: gray;
  }
-
+table{
+  background-color: blanchedalmond;
+  color: black;
+}
