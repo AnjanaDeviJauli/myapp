@@ -19,15 +19,15 @@ import java.util.Set;
 @Slf4j
 @Entity
 @Table(name = "courses")
-
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
-    private int id;
+    int id;
     @NonNull
     @Column(name = "course_name", length = 48)
-    private String courseName;
+    String courseName;
 
 //    @ToString.Exclude
 //    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "courses",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
