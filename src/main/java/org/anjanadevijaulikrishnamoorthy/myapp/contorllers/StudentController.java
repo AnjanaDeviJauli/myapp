@@ -120,7 +120,7 @@ public String findStudentById(@RequestParam(required = false) int id, Model mode
         log.warn(studentRepoI.findById(id).get().toString());
     } catch (RuntimeException ex){
         ex.printStackTrace();
-        model.addAttribute("user_not_found",String.format("Username: %d not found!",id));
+        model.addAttribute("student_not_found",String.format("Student: %d not found!",id));
         return ("studentfind");
     }
     return "studentfind";
@@ -129,19 +129,23 @@ public String findStudentById(@RequestParam(required = false) int id, Model mode
     @PostMapping("/findstudentbyName")
     public String findStudentByName(@RequestParam(name="firstName") String firstName,
                               @RequestParam(name="lastName") String lastName,Model model){
-      int id =studentRepoI.findByFirstNameAndLastName(firstName,lastName).getId();
+
 
         try {
+            int id =studentRepoI.findByFirstNameAndLastName(firstName,lastName).getId();
             model.addAttribute("stu",  studentRepoI.findById(id).get());
             log.warn(studentRepoI.findByFirstNameAndLastName(firstName,lastName).toString());
         } catch (RuntimeException ex){
             ex.printStackTrace();
-            model.addAttribute("user_not_found",String.format("Username: %s  %s not found!",firstName,lastName));
+            model.addAttribute("student_not_found",String.format("Student not found for the given first and last name combination!"));
             return ("studentfind");
         }
         return "studentfind";
     }
-
+   @GetMapping("/find*")
+    public String findStudent(){
+        return  "studentfind";
+   }
 
 
 

@@ -14,11 +14,11 @@
       <div class="col-4 ">
         <div th:replace="fragrams/girlboycount :: girlboycount" />
       </div>
-      <form class="form-inline col-2 offset-4 mx-12" method="post" action="/findstudentbyId">
+      <form class="form-inline col-2 offset-4 mx-12" method="post" th:action="@{/students/findstudentbyId}">
           <input class="form-control mr-sm-2" type="search" name="id" placeholder="First by id" aria-label="Search" required>
           <button style="background-color: blanchedalmond;" class="btn btn-outline-success my-2 my-sm-0" id="buttons" type="submit">Go</button>
         </form>
-      <form class="form-inline col-2 mx-12" method="post" action="/findstudentbyName">
+      <form class="form-inline col-2 mx-12" method="post" th:action="@{/students/findstudentbyName}">
           <input class="form-control mr-sm-2" type="search" name="firstName" placeholder="Enter first name" aria-label="Search" required>
           <input class="form-control mr-sm-2" type="search" name="lastName" placeholder="Enter last name" aria-label="Search" required>
           <button style="background-color: blanchedalmond;" class="btn btn-outline-success my-2 my-sm-0" id="buttons" type="submit">Go</button>
