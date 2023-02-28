@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -97,11 +98,16 @@ public class StudentController {
     //Student form
     //Create student object
     @GetMapping("/studentform")
-    public String studentForm(Model model){
-        model.addAttribute("student", new Student());
+    public ModelAndView studentForm(){
+//        model.addAttribute("student", new Student());
+//
+//        log.warn("student form method");
+//        return "studentform";
+        ModelAndView mv = new ModelAndView("studentform");
+        Student s = new Student();
+        mv.addObject("student",s);
+        return mv;
 
-        log.warn("student form method");
-        return "studentform";
     }
     //Save student object from student form
     @PostMapping("/savestudent")
@@ -109,6 +115,7 @@ public class StudentController {
         log.warn("student process method" + students);
         //log.warn(students.toString());
         studentRepoI.save(students);
+
         return "studentform";
     }
 
@@ -146,6 +153,22 @@ public String findStudentById(@RequestParam(required = false) int id, Model mode
     public String findStudent(){
         return  "studentfind";
    }
+
+   @GetMapping("/showUpdateForm")
+   public ModelAndView showUpdateForm(@RequestParam int id){
+        ModelAndView mv = new ModelAndView("studentform");
+       Student s= studentRepoI.findById(id).get();
+       log.warn(s.getDob().toString());
+       mv.addObject("student",s);
+       return mv;
+
+   }
+
+    @GetMapping("/deleteStudent")
+    public String deleteStudent(@RequestParam int id){
+        studentRepoI.deleteById(id);
+        return "redirect:/students/list";
+    }
 
 
 

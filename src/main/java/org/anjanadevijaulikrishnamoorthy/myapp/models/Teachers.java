@@ -42,7 +42,7 @@ public class Teachers {
     @Column(length = 48)
     String password;
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH,CascadeType.REMOVE})
     Set<Course> courses = new LinkedHashSet<>();
 
     public List<String> getCourses() {

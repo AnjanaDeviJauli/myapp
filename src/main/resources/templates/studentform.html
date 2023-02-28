@@ -41,7 +41,7 @@
                                      placeholder="Enter first name"
                                      pattern="^[a-zA-Z ]+"
                                      th:field="*{firstName}"
-                                     value="" required/>
+                                     value="${student.firstName}" required/>
                               <label class="form-label" for="firstName">First Name</label>
                             </div>
           
@@ -69,13 +69,14 @@
                             <div class="form-outline datepicker w-100">
                               <input type="date"
                                      class="form-control form-control-lg"
-                                     min="2020-01-01"
-                                     max="2024-12-31"
+                                     min="2010-01-01"
+                                     max="2014-12-31"
                                      title="Enter valid date of birth"
                                      id="dob"
                                      name="dob"
                                      th:field="*{dob}"
-                                     value="" 
+                                     value="${student.dob}" 
+                                     text="${student.dob}"
                                      required/>
                               <label for="dob" class="form-label">Birthday </label>
                             </div>
@@ -148,7 +149,11 @@
                           <input class="btn btn-primary btn-lg" type="submit" value="Submit" id="submit"/>
                         </div>
                       </div>
+                      <input type="hidden" name="id" th:field="*{id}"/>
                        </form>
+                       <hr/>
+                       <a th:href="@{/students/list}">Back to list</a>
+
                     </div>
 
                     </div>

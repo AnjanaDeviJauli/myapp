@@ -3,14 +3,13 @@ package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.TeacherDTO;
+import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -54,7 +53,21 @@ public class TeacherController {
         model.addAttribute("allteachers", teachers);
         return "teacherlist";
     }
+    @GetMapping("/showUpdateForm")
+    public ModelAndView showUpdateForm(@RequestParam int id){
+        ModelAndView mv = new ModelAndView("teacherform");
+        Teachers s= teacherRepoI.findById(id).get();
 
+        mv.addObject("teacher",s);
+        return mv;
+
+    }
+
+    @GetMapping("/deleteTeacher")
+    public String deleteTeacher(@RequestParam int id){
+        teacherRepoI.deleteById(id);
+        return "redirect:/teachers/teacherlist";
+    }
 
 
 

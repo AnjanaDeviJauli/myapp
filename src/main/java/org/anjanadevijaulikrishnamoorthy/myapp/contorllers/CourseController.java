@@ -5,15 +5,14 @@ import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.CourseDTO;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 
+import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.CourseService;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -57,5 +56,21 @@ public class CourseController {
 
         model.addAttribute("allcourses", courses);
         return "courselist";
+    }
+
+    @GetMapping("/showUpdateForm")
+    public ModelAndView showUpdateForm(@RequestParam int id){
+        ModelAndView mv = new ModelAndView("courseform");
+        Course s= courseRepoI.findById(id).get();
+
+        mv.addObject("course",s);
+        return mv;
+
+    }
+
+    @GetMapping("/deleteCourse")
+    public String deleteCourse(@RequestParam int id){
+        courseRepoI.deleteById(id);
+        return "redirect:/courses/courselist";
     }
 }
