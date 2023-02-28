@@ -2,6 +2,7 @@ package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
+import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.CourseDTO;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -20,14 +22,20 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "courses")
 public class CourseController {
+    private final TeacherRepoI teacherRepoI;
 
 
-    CourseRepoI courseRepoI;
-    CourseService courseService;
+   private final CourseRepoI courseRepoI;
+  private  final   CourseService courseService;
+    private final TeacherService teacherService;
+
     @Autowired
-    public CourseController(CourseRepoI courseRepoI,CourseService courseService) {
+    public CourseController(CourseRepoI courseRepoI,CourseService courseService,
+                            TeacherRepoI teacherRepoI,TeacherService teacherService) {
         this.courseRepoI = courseRepoI;
         this.courseService =courseService;
+        this.teacherRepoI = teacherRepoI;
+        this.teacherService=teacherService;
     }
 
     //Course form
@@ -72,5 +80,29 @@ public class CourseController {
     public String deleteCourse(@RequestParam int id){
         courseRepoI.deleteById(id);
         return "redirect:/courses/courselist";
+    }
+    @PostMapping("{id}/savecoursestoteacher")
+    public String saveCourseToTeacher(@RequestParam("courses-choice") String name, @PathVariable("id") int id, RedirectAttributes model){
+
+        // check course is on the list
+        boolean isCourseNameValid = courseRepoI.findAll().stream().anyMatch(course -> course.getCourseName().equals(name));
+        if(isCourseNameValid){
+            try {
+                teacherService.addCourse(id, courseService.findCourseByName(name));
+                model.addFlashAttribute("message", String.format("Persist %s to %d", name,id));
+                log.info(String.format("Persist %s to %d", name,id));
+            }catch(RuntimeException ex){
+                model.addFlashAttribute("message", String.format("Couldn't persist %s to %s", name,id));
+                log.error(String.format("Couldn't persist %s to %d", name,id));
+                ex.printStackTrace();
+            }
+        } else {
+            model.addFlashAttribute("message", String.format("Couldn't persist %s to %s because course don't exist", name,id));
+            log.warn(String.format("Couldn't persist %s to %s because course doesn't exist", name,id));
+        }
+        log.info("courses-choice:" + name);
+        log.info("isCourseNameValid: "+ isCourseNameValid);
+
+        return "redirect:/teachers/teacherlist";
     }
 }
