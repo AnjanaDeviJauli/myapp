@@ -37,7 +37,7 @@ public interface StudentRepoI extends JpaRepository<Student,Integer> {
     @Query("SELECT count(S.gender) fROM Student S where S.gender='F' AND S.grade=?1")
     Integer fineNumberOfGirlsInGrade(int grade);
 
-
+    //@Query("SELECT S FROM Student S where month(s.dob)=02 and day(s.dob)=28")
     @Query("SELECT S FROM Student S WHERE S.dob=current_date")
     List<Student>  birhthdaysToday();
 

@@ -28,9 +28,15 @@ public class Score {
     @NonNull
     //@OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     Course course;
-    @NonNull
+
     double mark;
 
+
+    public Score(@NonNull Student student, @NonNull Course course, double mark) {
+        this.student = student;
+        this.course = course;
+        this.mark = mark;
+    }
 
 
 }
