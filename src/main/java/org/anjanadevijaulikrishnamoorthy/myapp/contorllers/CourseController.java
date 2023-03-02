@@ -92,7 +92,7 @@ public class CourseController {
                 model.addFlashAttribute("message", String.format("Persist %s to %d", name,id));
                 log.info(String.format("Persist %s to %d", name,id));
             }catch(RuntimeException ex){
-                model.addFlashAttribute("message", String.format("Couldn't persist %s to %s", name,id));
+                model.addFlashAttribute("message", String.format("Couldn't persist %s to %d", name,id));
                 log.error(String.format("Couldn't persist %s to %d", name,id));
                 ex.printStackTrace();
             }
