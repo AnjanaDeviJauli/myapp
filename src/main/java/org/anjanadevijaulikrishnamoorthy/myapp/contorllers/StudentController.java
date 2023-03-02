@@ -14,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 @Controller
@@ -81,7 +84,22 @@ public class StudentController {
     }
     @GetMapping(value = {"/birthdaystoday"})
     public String birthday(Model model){
-        List<Student> birthdaysToday = studentRepoI.birhthdaysToday();
+      //  List<Student> birthdaysToday = studentRepoI.birhthdaysToday();
+        List<Student> birthdaysToday =new ArrayList<>();
+        List<Student> allStudents = studentRepoI.findAll();
+        LocalDate currentDate = LocalDate.now();
+        // get current date and month
+        int date = currentDate.getDayOfMonth();
+        Month month = currentDate.getMonth();
+
+        for(Student s : allStudents){
+            if(s.getDob().getDayOfMonth()==date && s.getDob().getMonth()==month ){
+                birthdaysToday.add(s);
+            }
+        }
+
+
+
 
         //log.warn(birthdaysToday.toString());
 
@@ -134,7 +152,7 @@ public String findStudentById(@RequestParam(required = false) int id,@PathVariab
     return "studentfind";
 }
 @PostMapping("/findStudentbyParam{id}")
-public String findStudent(@PathVariable(required = true) int id1, Model model){
+public String findStudent(@RequestParam(required = true) int id1, Model model){
     model.addAttribute("stu", studentRepoI.findById(id1).get());
     return "studentfind";
 }

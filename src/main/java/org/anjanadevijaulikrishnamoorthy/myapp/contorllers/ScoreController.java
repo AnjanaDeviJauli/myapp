@@ -7,6 +7,8 @@ import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
+import org.anjanadevijaulikrishnamoorthy.myapp.services.ScoreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,8 @@ public class ScoreController {
     ScoreRepoI scoreRepoI;
     CourseRepoI courseRepoI;
     StudentRepoI studentRepoI;
-
+    ScoreService scoreService;
+    @Autowired
     public ScoreController(ScoreRepoI scoreRepoI, CourseRepoI courseRepoI, StudentRepoI studentRepoI) {
         this.scoreRepoI = scoreRepoI;
         this.courseRepoI = courseRepoI;
@@ -31,6 +34,8 @@ public class ScoreController {
 
     @GetMapping("/selectStudentToAddCourses")
     public ModelAndView selectStudent(@RequestParam int id,Model model) throws Exception {
+
+
         ModelAndView mv = new ModelAndView("studentcourse");
         Student s = studentRepoI.findById(id).get();
         List<Course> c = courseRepoI.findAll();
@@ -65,7 +70,7 @@ public class ScoreController {
         model.addAttribute("student", s);
         model.addAttribute("courses", courseAssignedToStudent);
         model.addAttribute("scores",studentScore);
-//        return "redirect:/students/findStudentbyParam?="+sid;
+     //  return "redirect:/students/findStudentbyParam?="+sid;
         return "redirect:/students/list";
     }
 

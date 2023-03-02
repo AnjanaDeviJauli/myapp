@@ -24,10 +24,10 @@
           <li class="list-group-item"><span>Grade:</span>
                 <span th:text="${student.grade}"></span></li>
             
-         <li> <a th:href="@{/students/showUpdateForm(id=${student.id})}" class="btn btn-info">Update</a>
-          <a th:href="@{/students/deleteStudent(id=${student.id})}" class="btn btn-danger ml-2" >Delete</a>
-          <a th:href="@{/scores/selectStudentToAddCourses(id=${student.id})}" class="btn btn-danger ml-2" >Add Course</a>
-          <a th:href="@{/scores/studentScore(id=${student.id})}" class="btn btn-danger ml-2" >Add Score</a>
+         <li> <a th:href="@{/students/showUpdateForm(id=${student.id})}" class="btn btn-outline-primary">Update</a>
+          <a th:href="@{/students/deleteStudent(id=${student.id})}" class="btn btn-outline-danger ml-2" >Delete</a></li>
+        <li>  <a th:href="@{/scores/selectStudentToAddCourses(id=${student.id})}" class="btn btn-outline-primary ml-2" >Add Course</a>
+          <a th:href="@{/scores/studentScore(id=${student.id})}" class="btn btn-outline-primary ml-2" >Add Score</a>
         </li>
             
         </ul>

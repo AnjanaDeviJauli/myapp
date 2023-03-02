@@ -56,7 +56,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
     Student s1 = (new Student("Ganesh", "Venkat",
-            LocalDate.now(), 'M', 1));
+            LocalDate.of(2015,LocalDate.now().getMonth(),LocalDate.now().getDayOfMonth()), 'M', 1));
     Student s2 = (new Student("Sai", "Ram",
             LocalDate.of(2015, 5, 15), 'M', 1));
     Student s3 = (new Student("Kelly", "Duncan",
@@ -74,7 +74,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     Student s9 = (new Student("Vijaya", "Jeyaram",
             LocalDate.of(2014, 2, 11), 'F', 2));
     Student s10 = (new Student("Preetha", "Jai",
-            LocalDate.now(), 'F', 2));
+            LocalDate.of(2014,LocalDate.now().getMonth(),LocalDate.now().getDayOfMonth()), 'F', 2));
     Student s11 = (new Student("Gomathi", "Siva",
             LocalDate.of(2014, 7, 19), 'F', 2));
     Student s12 = (new Student("Sivaram", "Ganeshan",
@@ -88,7 +88,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     Student s16 = (new Student("Balaji", "Sundar",
             LocalDate.of(2013, 2, 5), 'M', 3));
     Student s17 = (new Student("Gandhi", "Mohan",
-            LocalDate.of(2013, 1, 6), 'M', 3));
+            LocalDate.of(2013,LocalDate.now().getMonth(),LocalDate.now().getDayOfMonth()), 'M', 3));
     Student s18 = (new Student("Harry", "Potter",
             LocalDate.of(2013, 6, 8), 'M', 3));
     Student s19 = (new Student("Nick", "Sammy",
@@ -102,7 +102,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     Student s23 = (new Student("Brian", "Baker",
             LocalDate.of(2012, 4, 5), 'M', 4));
     Student s24 = (new Student("Austin", "Butler",
-            LocalDate.now(), 'M', 4));
+            LocalDate.of(2012,LocalDate.now().getMonth(),LocalDate.now().getDayOfMonth()), 'M', 4));
     Student s25 = (new Student("Charles", "Davies",
             LocalDate.of(2012, 4, 25), 'M', 4));
     Student s26 = (new Student("Alex", "Clark",
