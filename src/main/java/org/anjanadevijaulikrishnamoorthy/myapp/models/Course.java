@@ -6,10 +6,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.TeacherDTO;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @ToString
@@ -42,7 +39,17 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     Set<Teachers> teachers = new LinkedHashSet<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course course)) return false;
+        return getId() == course.getId() && getCourseName().equals(course.getCourseName());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCourseName());
+    }
 //    public Set<TeacherDTO> getTeacherDTO() {
 //        Set<TeacherDTO> teacher= new LinkedHashSet<>();
 //        for (Teachers t:teachers){

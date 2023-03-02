@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 @NoArgsConstructor
 @ToString
@@ -51,7 +52,15 @@ public class Student {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student student)) return false;
+        return getId() == student.getId() && getGender() == student.getGender() && getGrade() == student.getGrade() && getAge() == student.getAge() && getFirstName().equals(student.getFirstName()) && getLastName().equals(student.getLastName()) && getDob().equals(student.getDob());
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getDob(), getGender(), getGrade(), getAge());
+    }
 }

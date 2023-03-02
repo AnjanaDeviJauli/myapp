@@ -154,7 +154,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
    teacherRepoI.saveAll(List.of(t1,t2,t3,t4,t5));
 
-        teacherRepoI.saveAll(List.of(t1,t2,t3,t4));
+
 
         double doub_value = 70.00;
         scoreRepoI.save(new Score(s1,science,doub_value));

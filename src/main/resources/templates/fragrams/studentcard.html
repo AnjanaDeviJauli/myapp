@@ -27,6 +27,7 @@
          <li> <a th:href="@{/students/showUpdateForm(id=${student.id})}" class="btn btn-info">Update</a>
           <a th:href="@{/students/deleteStudent(id=${student.id})}" class="btn btn-danger ml-2" >Delete</a>
           <a th:href="@{/scores/selectStudentToAddCourses(id=${student.id})}" class="btn btn-danger ml-2" >Add Course</a>
+          <a th:href="@{/scores/studentScore(id=${student.id})}" class="btn btn-danger ml-2" >Add Score</a>
         </li>
             
         </ul>

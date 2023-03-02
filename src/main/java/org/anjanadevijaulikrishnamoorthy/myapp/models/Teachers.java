@@ -5,10 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -64,5 +61,15 @@ public class Teachers {
         course.getTeachers().add(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Teachers teachers)) return false;
+        return getId() == teachers.getId() && getFirstNameT().equals(teachers.getFirstNameT()) && getLastNameT().equals(teachers.getLastNameT()) && getEmail().equals(teachers.getEmail());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstNameT(), getLastNameT(), getEmail());
+    }
 }

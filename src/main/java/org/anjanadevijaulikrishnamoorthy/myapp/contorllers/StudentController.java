@@ -120,10 +120,11 @@ public class StudentController {
     }
 
 @PostMapping("/findstudentbyId")
-public String findStudentById(@RequestParam(required = false) int id, Model model){
+public String findStudentById(@RequestParam(required = false) int id,@PathVariable(required = false) int id1, Model model){
 
     try {
         model.addAttribute("stu", studentRepoI.findById(id).get());
+        model.addAttribute("stu", studentRepoI.findById(id1).get());
         log.warn(studentRepoI.findById(id).get().toString());
     } catch (RuntimeException ex){
         ex.printStackTrace();
@@ -132,6 +133,12 @@ public String findStudentById(@RequestParam(required = false) int id, Model mode
     }
     return "studentfind";
 }
+@PostMapping("/findStudentbyParam{id}")
+public String findStudent(@PathVariable(required = true) int id1, Model model){
+    model.addAttribute("stu", studentRepoI.findById(id1).get());
+    return "studentfind";
+}
+
 
     @PostMapping("/findstudentbyName")
     public String findStudentByName(@RequestParam(name="firstName") String firstName,
