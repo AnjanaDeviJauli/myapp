@@ -38,8 +38,6 @@ public class Student {
     char gender;
     @NonNull
     int grade;
-
-
     @Transient
     int age;
 

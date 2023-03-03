@@ -47,4 +47,10 @@ public class CourseService {
     public Course findCourseByName(String name){
         return courseRepoI.findByCourseName(name).orElseThrow();
     }
+
+
+    public List<Course> findAllCourses(){
+        return  courseRepoI.findAll();
+    }
+
 }

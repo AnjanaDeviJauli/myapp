@@ -7,7 +7,9 @@ import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
+import org.anjanadevijaulikrishnamoorthy.myapp.services.CourseService;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.ScoreService;
+import org.anjanadevijaulikrishnamoorthy.myapp.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,112 +23,113 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "scores")
 public class ScoreController {
-    ScoreRepoI scoreRepoI;
-    CourseRepoI courseRepoI;
-    StudentRepoI studentRepoI;
+
     ScoreService scoreService;
+
+    CourseService courseService;
+
+    StudentService studentService;
+
     @Autowired
-    public ScoreController(ScoreRepoI scoreRepoI, CourseRepoI courseRepoI, StudentRepoI studentRepoI) {
-        this.scoreRepoI = scoreRepoI;
-        this.courseRepoI = courseRepoI;
-        this.studentRepoI = studentRepoI;
+    public ScoreController(ScoreService scoreService, CourseService courseService, StudentService studentService) {
+        this.scoreService = scoreService;
+        this.courseService = courseService;
+        this.studentService = studentService;
     }
 
+    //Show registration form to assign course for each student
     @GetMapping("/selectStudentToAddCourses")
-    public ModelAndView selectStudent(@RequestParam int id,Model model) throws Exception {
+    public ModelAndView selectStudent(@RequestParam int id, Model model) throws Exception {
 
-
+        //Creating ModelAndView to add student and course object
         ModelAndView mv = new ModelAndView("studentcourse");
-        Student s = studentRepoI.findById(id).get();
-        List<Course> c = courseRepoI.findAll();
-        c.removeAll(scoreRepoI.findCourseByStudent(s));
-        if(c==null){
-            model.addAttribute("message","No more course to add");
+
+        //Finding Student using student id got as hidden input
+        Student s = studentService.findStudentById(id);
+
+        //Finding all courses available at school
+        List<Course> c = courseService.findAllCourses();
+
+        //Removing courses already assigned to student, so that admin cannot add duplicate course to the same student
+        c.removeAll(scoreService.findCourseByStudent(s));
+
+        //Checking null if all course is already assigned to student
+        if (c == null) {
+            model.addAttribute("message", "No more course to add");
             throw new Exception();
         }
+
+        //adding student and course object to the ModelAndView
         mv.addObject("student", s);
         mv.addObject("courses", c);
 
         return mv;
     }
 
+
+    //save course to each student after submitting studentcourse form
     @PostMapping("/addCoursesToStudent")
-    public String addCoursesToStudent(@RequestParam(name = "id") int sid, @RequestParam(name = "cid",required = false) String[] cid, Model model) {
-        Student s = studentRepoI.findById(sid).get();
+    public String addCoursesToStudent(@RequestParam(name = "id") int sid, @RequestParam(name = "cid", required = false) String[] cid, Model model) {
+        //Find the student using hidden input id
+        Student s = studentService.findStudentById(sid);
+
+        //Creating Course and Score object to assign Course and enter Score
         List<Course> courseAssignedToStudent = new ArrayList<>();
         List<Score> studentScore = new ArrayList<>();
-        double mark = 0;
-        for (String ids : cid) {
 
-            log.warn(ids);
-            Course c = courseRepoI.findByCourseName(ids).get();
+        //Finding Course object assigning all the course from checklist to the student and updating score object
+        scoreService.assignCourseToStudent(s, cid);
 
-
-            scoreRepoI.save(new Score(s, c, mark));
-
-        }
-        courseAssignedToStudent=scoreRepoI.findCourseByStudent(s);
-         studentScore=scoreRepoI.findScoreByStudent(s);
+        //Finding course assigned to student and mark for each course
+        courseAssignedToStudent = scoreService.findCourseByStudent(s);
+        studentScore = scoreService.findScoreByStudent(s);
         model.addAttribute("student", s);
         model.addAttribute("courses", courseAssignedToStudent);
-        model.addAttribute("scores",studentScore);
-     //  return "redirect:/students/findStudentbyParam?="+sid;
+        model.addAttribute("scores", studentScore);
+
+        //  return "redirect:/students/findStudentbyParam?="+sid;
         return "redirect:/students/list";
     }
 
-@GetMapping("/studentScore")
-    public String studentscore(@RequestParam int id,Model model){
-    Student s = studentRepoI.findById(id).get();
-        List<Score> studentScore=scoreRepoI.findScoreByStudent(s);
-        model.addAttribute("scores",studentScore);
+    //display student score when Add Score button is clicked for each student
+    @GetMapping("/studentScore")
+    public String studentscore(@RequestParam int id, Model model) {
+        Student s = studentService.findStudentById(id);
+        List<Score> studentScore = scoreService.findScoreByStudent(s);
+        model.addAttribute("scores", studentScore);
         return "scorelist";
-}
-@PostMapping("/saveScoretoStudenCourse")
-    public String addStudentCourseScore(@RequestParam int id, @RequestParam (name="mark") double mark, Model model){
-        Score s = scoreRepoI.findById(id).get();
-        log.warn(s.toString());
-        s.setMark(mark);
-        scoreRepoI.save(s);
-    List<Score> studentScore=scoreRepoI.findScoreByStudent(s.getStudent());
-    model.addAttribute("scores",studentScore);
-    Double average = scoreRepoI.findStudentAverageScore(s.getStudent());
-    model.addAttribute("average",average);
-
-    String grade=null;
-    switch((int) (average/10)) {
-        // for >= 90
-        case 10:
-        case 9:
-            grade = "A";
-            break;
-        // for >= 80 and <90
-        case 8:
-            grade = "B";
-            break;
-        // for >= 70 and <80
-        case 7:
-            grade = "C";
-            break;
-        // for >= 60 and <70
-        case 6:
-            grade = "D";
-            break;
-        // for >= 50 and <60
-        case 5:
-            grade = "E";
-            break;
-        // for < 50
-        default:
-            grade = "F";
-            break;
     }
-    model.addAttribute("examgrade",grade);
 
-    return "scorelist";
-}
+    //To enter/update mark for each Course assigned to a Student
+    @PostMapping("/saveScoretoStudenCourse")
+    public String addStudentCourseScore(@RequestParam int id, @RequestParam(name = "mark") double mark, Model model) {
+        //Find the score corresponding to each course using score id
+        Score s = scoreService.findByScoreId(id);
+        log.warn(s.toString());
 
+        //set mark for that score corresponding to the course since each score object has its
+        //student and course object
+        s.setMark(mark);
 
+        //save the updated score object
 
+        scoreService.saveScore(s);
+
+        //The following attribute is used to display score details of the particular student
+        List<Score> studentScore = scoreService.findScoreByStudent(s.getStudent());
+        model.addAttribute("scores", studentScore);
+
+        //Finding the average of the mark for that student
+        Double average = scoreService.findStudentAverageScore(s.getStudent());
+        model.addAttribute("average", average);
+
+        //Display exam grade according to the average
+        String grade = scoreService.findGrade(average);
+        model.addAttribute("examgrade", grade);
+
+        //display the score details of the student with input form to enter score/mark.
+        return "scorelist";
+    }
 
 
 }

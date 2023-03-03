@@ -18,4 +18,5 @@ public interface ScoreRepoI extends JpaRepository<Score,Integer> {
 
     @Query("SELECT AVG(S.mark) FROM Score S WHERE S.student=?1")
     Double findStudentAverageScore(Student s);
+
 }

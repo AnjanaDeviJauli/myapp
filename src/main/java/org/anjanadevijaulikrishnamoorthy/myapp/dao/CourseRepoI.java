@@ -18,4 +18,6 @@ public interface CourseRepoI extends JpaRepository<Course,Integer> {
 
     @Query("SELECT C.teachers FROM Course C WHERE C.id=?1")
     List<Teachers> findTeacherAssignedToCourse(int id);
+
+    List<Course> findAll();
 }

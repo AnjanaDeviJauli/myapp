@@ -52,6 +52,14 @@ public class CourseController {
     public String courseProcess(@ModelAttribute("course") Course course){
         log.warn("course process method" + course);
         //log.warn(students.toString());
+
+        if(courseRepoI.findAll().stream().anyMatch(course1 -> course1.getId()==(course.getId()))){
+        Course c = courseRepoI.findById(course.getId()).get();
+        c.setCourseName(course.getCourseName());
+        courseRepoI.save(c);
+
+        }
+        else
         courseRepoI.save(course);
         return "courseform";
     }

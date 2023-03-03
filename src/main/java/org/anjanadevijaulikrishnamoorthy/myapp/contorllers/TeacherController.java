@@ -74,9 +74,21 @@ public class TeacherController {
     }
 
     @GetMapping("/deleteTeacher")
-    public String deleteTeacher(@RequestParam int id){
-        teacherRepoI.deleteById(id);
-        return "redirect:/teachers/teacherlist";
+    public String deleteTeacher(@RequestParam int id,Model model)  {
+        Teachers t =teacherRepoI.findById(id).get();
+        if(t.getCourses()!=null && t.getCourses().size()==0) {
+            teacherRepoI.deleteById(id);
+            model.addAttribute("message1",String.format("%s %s Teacher is deleted",t.getFirstNameT(),t.getLastNameT()));
+        }else{
+            model.addAttribute("message1",
+                    String.format("%s %s teacher cannot be deleted because, he/she is assigned to course",t.getFirstNameT(),t.getLastNameT()));
+
+        }
+        List<TeacherDTO> teachers = teacherService.getTeachersEssInfo();
+
+        model.addAttribute("allteachers", teachers);
+
+        return "teacherlist";
     }
 
 
