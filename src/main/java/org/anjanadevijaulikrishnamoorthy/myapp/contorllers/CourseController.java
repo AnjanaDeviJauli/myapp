@@ -25,49 +25,49 @@ public class CourseController {
     private final TeacherRepoI teacherRepoI;
 
 
-   private final CourseRepoI courseRepoI;
-  private  final   CourseService courseService;
+    private final CourseRepoI courseRepoI;
+    private final CourseService courseService;
     private final TeacherService teacherService;
 
     @Autowired
-    public CourseController(CourseRepoI courseRepoI,CourseService courseService,
-                            TeacherRepoI teacherRepoI,TeacherService teacherService) {
+    public CourseController(CourseRepoI courseRepoI, CourseService courseService,
+                            TeacherRepoI teacherRepoI, TeacherService teacherService) {
         this.courseRepoI = courseRepoI;
-        this.courseService =courseService;
+        this.courseService = courseService;
         this.teacherRepoI = teacherRepoI;
-        this.teacherService=teacherService;
+        this.teacherService = teacherService;
     }
 
     //Course form
     //Create course object
     @GetMapping("/courseform")
-    public String courseForm(Model model){
+    public String courseForm(Model model) {
         model.addAttribute("course", new Course());
 
         log.warn("course form method");
         return "courseform";
     }
+
     //save course object by getting values from course form
     @PostMapping("/savecourse")
-    public String courseProcess(@ModelAttribute("course") Course course){
+    public String courseProcess(@ModelAttribute("course") Course course) {
         log.warn("course process method" + course);
         //log.warn(students.toString());
 
-        if(courseRepoI.findAll().stream().anyMatch(course1 -> course1.getId()==(course.getId()))){
-        Course c = courseRepoI.findById(course.getId()).get();
-        c.setCourseName(course.getCourseName());
-        courseRepoI.save(c);
+        if (courseRepoI.findAll().stream().anyMatch(course1 -> course1.getId() == (course.getId()))) {
+            Course c = courseRepoI.findById(course.getId()).get();
+            c.setCourseName(course.getCourseName());
+            courseRepoI.save(c);
 
-        }
-        else
-        courseRepoI.save(course);
+        } else
+            courseRepoI.save(course);
         return "courseform";
     }
 
 
     //Display available course to front end
     @GetMapping(value = {"/courselist"})
-    public String findallcourses(Model model){
+    public String findallcourses(Model model) {
         List<CourseDTO> courses = courseService.getCourseEssInfo();
 
         model.addAttribute("allcourses", courses);
@@ -75,41 +75,63 @@ public class CourseController {
     }
 
     @GetMapping("/showUpdateForm")
-    public ModelAndView showUpdateForm(@RequestParam int id){
+    public ModelAndView showUpdateForm(@RequestParam int id) {
         ModelAndView mv = new ModelAndView("courseform");
-        Course s= courseRepoI.findById(id).get();
+        Course s = courseRepoI.findById(id).get();
 
-        mv.addObject("course",s);
+        mv.addObject("course", s);
         return mv;
 
     }
 
     @GetMapping("/deleteCourse")
-    public String deleteCourse(@RequestParam int id){
+    public String deleteCourse(@RequestParam int id) {
         courseRepoI.deleteById(id);
         return "redirect:/courses/courselist";
     }
+
+    //Delete course assigned to  Teacher
+    @PostMapping ("{id}/deleteCourseFromTeacher")
+    public String deleteCourseAssignedToTeacher(@RequestParam("course") String name,@PathVariable("id") int id,RedirectAttributes model){
+        if(courseService.findIfCourseExist(name)){
+        teacherService.deletCourse(id,name);
+        String teacherFirstAndLastName=teacherService.findTeacherByIdFirstNameAndLastName(id);
+        model.addFlashAttribute("message",String.format("Deleted %s course assigned to %s ",name,teacherFirstAndLastName));}
+        else{
+            model.addFlashAttribute("message", String.format("Couldn't delete %s to %s because course don't exist",
+                    name, teacherService.findTeacherByIdFirstNameAndLastName(id)));
+        }
+        return "redirect:/teachers/teacherlist";
+    }
+
+
+    //Add Course to Teacher
     @PostMapping("{id}/savecoursestoteacher")
-    public String saveCourseToTeacher(@RequestParam("courses-choice") String name, @PathVariable("id") int id, RedirectAttributes model){
+    public String saveCourseToTeacher(@RequestParam("courses-choice") String name, @PathVariable("id") int id, RedirectAttributes model) {
 
         // check course is on the list
-        boolean isCourseNameValid = courseRepoI.findAll().stream().anyMatch(course -> course.getCourseName().equals(name));
-        if(isCourseNameValid){
+        boolean isCourseNameValid = courseService.findIfCourseExist(name);
+        String teacherFirstAndLastName=teacherService.findTeacherByIdFirstNameAndLastName(id);
+        if (isCourseNameValid) {
             try {
                 teacherService.addCourse(id, courseService.findCourseByName(name));
-                model.addFlashAttribute("message", String.format("Persist %s to %d", name,id));
-                log.info(String.format("Persist %s to %d", name,id));
-            }catch(RuntimeException ex){
-                model.addFlashAttribute("message", String.format("Couldn't persist %s to %d", name,id));
-                log.error(String.format("Couldn't persist %s to %d", name,id));
+                model.addFlashAttribute("message", String.format("Added %s to %s",
+                        name, teacherFirstAndLastName));
+                log.info(String.format
+                        ("Added %s to the teacher %S",
+                                name, teacherFirstAndLastName));
+            } catch (RuntimeException ex) {
+                model.addFlashAttribute("message", String.format("Couldn't persist %s to %s", name, teacherFirstAndLastName));
+                log.error(String.format("Couldn't persist %s to %s", name, teacherFirstAndLastName));
                 ex.printStackTrace();
             }
         } else {
-            model.addFlashAttribute("message", String.format("Couldn't persist %s to %s because course don't exist", name,id));
-            log.warn(String.format("Couldn't persist %s to %s because course doesn't exist", name,id));
+            model.addFlashAttribute("message", String.format("Couldn't persist %s to %s because course don't exist",
+                    name, teacherService.findTeacherByIdFirstNameAndLastName(id)));
+            log.warn(String.format("Couldn't persist %s to %s because course doesn't exist", name, id));
         }
         log.info("courses-choice:" + name);
-        log.info("isCourseNameValid: "+ isCourseNameValid);
+        log.info("isCourseNameValid: " + isCourseNameValid);
 
         return "redirect:/teachers/teacherlist";
     }

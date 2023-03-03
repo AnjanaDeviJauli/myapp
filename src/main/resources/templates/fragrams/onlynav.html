@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div th:fragment="onlynav">
+        <a class="navbar-brand" href="#"><img style="width:50px;height: 50px;" src = "https://www.graphicsprings.com/filestorage/stencils/aea126a28feb00b996ef0ccf47171221.svg"></a>
+  
+  <h1  style="color:blanchedalmond;font-size:60px; margin-left: 25%; margin-right: 20%; margin-top:-40px">Great Elementary School</h1> 
+    <nav  class="navbar navbar-expand-lg navbar-light justify-content-between ">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class=" navbar-collapse" id="navbarNav">
+          <div class="navbar-nav">
+              <a class=" nav-item nav-link" th:href="@{search}">Home</a>
+            
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Register
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" th:href="@{/students/studentform}">Register Student</a></li>
+                <li><a class="dropdown-item" th:href="@{/courses/courseform}">Register Course</a></li>
+                <li><a class="dropdown-item" th:href="@{/teachers/teacherform}">Register Teacher</a></li>
+              </ul>
+            </div>
+            <a class="nav-item nav-link" th:href="@{/students/list}">All students</a>
+            <a class="nav-item nav-link" th:href="@{/courses/courselist}">All courses</a>
+            <a class="nav-item nav-link" th:href="@{/teachers/teacherlist}">All teachers</a>
+            <a class="nav-item nav-link" th:href="@{/students/birthdaystoday}">Birthdays today</a>
+            
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Students by Grade level
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" th:href="@{/students/first}">First Grade</a></li>
+                <li><a class="dropdown-item" th:href="@{/students/second}">Second Grade</a></li>
+                <li><a class="dropdown-item" th:href="@{/students/third}">Third Grade</a></li>
+                <li><a class="dropdown-item" th:href="@{/students/fourth}">Fourth Grade</a></li> 
+              </ul>
+            </div>
+
+          </div>
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Students in Extention/Tution
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" th:href="@{/scores/highScoreStudents}">Extention</a></li>
+              <li><a class="dropdown-item" th:href="@{/scores/lowScoreStudents}">Tution</a></li>
+             
+            </ul>
+          </div>
+
+        </div>
+        
+        
+        </div>
+       <form class="form-inline nav-item ">
+
+          <a class="btn btn-outline-success my-2 my-sm-0" href="../index"  type="button">Logout</a>
+        </form>
+      </nav>
+    </div>
+</body>
+</html>

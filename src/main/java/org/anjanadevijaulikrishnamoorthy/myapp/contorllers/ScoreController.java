@@ -1,9 +1,6 @@
 package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.ScoreRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
@@ -29,6 +26,8 @@ public class ScoreController {
     CourseService courseService;
 
     StudentService studentService;
+    List<Student> highScoreStudent = new ArrayList<>();
+    List<Student> lowScoreStudent = new ArrayList<>();
 
     @Autowired
     public ScoreController(ScoreService scoreService, CourseService courseService, StudentService studentService) {
@@ -77,7 +76,7 @@ public class ScoreController {
         List<Course> courseAssignedToStudent = new ArrayList<>();
         List<Score> studentScore = new ArrayList<>();
 
-        //Finding Course object assigning all the course from checklist to the student and updating score object
+        //Assigning all the course from checklist to the student and updating score object
         scoreService.assignCourseToStudent(s, cid);
 
         //Finding course assigned to student and mark for each course
@@ -88,7 +87,7 @@ public class ScoreController {
         model.addAttribute("scores", studentScore);
 
         //  return "redirect:/students/findStudentbyParam?="+sid;
-        return "redirect:/students/list";
+        return "studentcourse";
     }
 
     //display student score when Add Score button is clicked for each student
@@ -124,11 +123,32 @@ public class ScoreController {
         model.addAttribute("average", average);
 
         //Display exam grade according to the average
-        String grade = scoreService.findGrade(average);
-        model.addAttribute("examgrade", grade);
+        String examgrade = scoreService.findGrade(average);
+        model.addAttribute("examgrade",examgrade);
+
+
+        if(examgrade.equalsIgnoreCase("A")){
+            highScoreStudent.add(s.getStudent());
+
+        }else if(examgrade.equalsIgnoreCase("f")||(examgrade.equalsIgnoreCase("e"))
+        || (examgrade.equalsIgnoreCase("d"))||(examgrade.equalsIgnoreCase("c"))){
+            lowScoreStudent.add(s.getStudent());
+
+        }
 
         //display the score details of the student with input form to enter score/mark.
         return "scorelist";
+    }
+
+    @GetMapping("/highScoreStudents")
+    public String findHighScoreStudent(Model model){
+        model.addAttribute("allstu",highScoreStudent);
+        return "list";
+    }
+    @GetMapping("/lowScoreStudents")
+    public String findlowScoreStudent(Model model){
+        model.addAttribute("allstu",lowScoreStudent);
+        return "list";
     }
 
 

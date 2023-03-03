@@ -36,6 +36,12 @@ public class TeacherService {
 
 
     }
+
+    @Transactional(rollbackOn = {NoSuchElementException.class})
+    public void deletCourse(Integer id,String name) throws NoSuchElementException{
+        Teachers t = teacherRepoI.findById(id).orElseThrow();
+        t.deleteCourses(courseRepoI.findByCourseName(name).get());
+    }
     //adding course to teacher
     @Transactional(rollbackOn = {NoSuchElementException.class})
     public void addCourse(Integer id, Course c) throws NoSuchElementException{
@@ -45,6 +51,8 @@ public class TeacherService {
         t.addCourses(c);
         teacherRepoI.save(t);
     }
+
+
 
     public List<TeacherDTO> getTeachersEssInfo(){
 
@@ -68,5 +76,9 @@ public class TeacherService {
                             oneTeacher.getEmail(),oneTeacher.getUsername(),oneTeacher.getCourses());
                 })
                 .collect(Collectors.toList());
+    }
+
+    public String findTeacherByIdFirstNameAndLastName(int id){
+      return   teacherRepoI.findById(id).get().getFirstNameT()+" "+teacherRepoI.findById(id).get().getLastNameT();
     }
 }

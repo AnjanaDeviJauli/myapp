@@ -53,4 +53,7 @@ public class CourseService {
         return  courseRepoI.findAll();
     }
 
+    public boolean findIfCourseExist(String name) {
+       return courseRepoI.findAll().stream().anyMatch(course -> course.getCourseName().equals(name));
+    }
 }

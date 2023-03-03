@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.anjanadevijaulikrishnamoorthy.myapp.services.ScoreService;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -40,6 +41,8 @@ public class Student {
     int grade;
     @Transient
     int age;
+
+
 
     public int getAge() {
         return Period.between(this.dob,LocalDate.now()).getYears();

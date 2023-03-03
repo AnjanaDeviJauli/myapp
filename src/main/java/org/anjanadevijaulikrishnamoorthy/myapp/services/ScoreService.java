@@ -12,9 +12,6 @@ import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
 
 @Service
@@ -68,10 +65,14 @@ public class ScoreService {
 
     public void assignCourseToStudent(Student s, String[] cid) {
         double mark = 0;
+        try{
         for (String ids : cid) {
             log.warn(ids);
             Course c = courseRepoI.findByCourseName(ids).get();
             scoreRepoI.save(new Score(s, c, mark));
+        }}catch (RuntimeException ex){
+            ex.printStackTrace();
+
         }
     }
 
@@ -90,7 +91,18 @@ public class ScoreService {
     }
 
     public double findStudentAverageScore(Student s){
-      return   scoreRepoI.findStudentAverageScore(s);
+      List<Score> score =  scoreRepoI.findScoreByStudent(s);
+      int count=0;
+      for(Score mark:score){
+          if(mark.getMark()>0){
+              count++;
+          }
+
+      }
+
+        return scoreRepoI.findStudentScoreSum(s)/count;
+
+   //   return   scoreRepoI.findStudentAverageScore(s);
     }
 
     public Score findByScoreId(int sid){

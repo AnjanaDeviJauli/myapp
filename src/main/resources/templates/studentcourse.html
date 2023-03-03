@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/studentform.css}" />
+</head>
+<body>
+<div>
+  
+  
+  <div th:replace="fragrams/onlynav :: onlynav" />
+      
+</div>
+
+          <section class="vh-100 gradient-custom" id="section">
+            <div class="container py-5 h-auto">
+              <div class="row justify-content-center align-items-center h-auto">
+                <div class="col-12 col-lg-9 col-xl-7">
+                  <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Course to Student</h3> </h3>
+                      <form id="myform" method="post" name="myForm"  th:action="@{/scores/addCoursesToStudent}" th:object="${student}">
+                        <!-- <div class="row-md-6 mb-4 form-outline">
+                            <input type="number" id="rollNumber" disabled  class="form-control form-control-lg"  th:text="${student.id}" />
+                            <label class="form-label" for="rollNumber"><strong>Roll number</strong> </label>
+                          </div> -->
+                        <div class="row">
+                          <div class="col-md-6 mb-4">
+          
+                            <div class="form-outline">
+                              <input type="text"
+                                     id="firstName"
+                                     class="form-control form-control-lg"
+                                     name="firstName"
+                                     placeholder="Enter first name"
+                                     pattern="^[a-zA-Z ]+"
+                                     th:field="${student.firstName}"
+                                     value="${student.firstName}" disabled/>
+                              <label class="form-label" for="firstName">First Name</label>
+                            </div>
+          
+                          </div>
+                          <div class="col-md-6 mb-4">
+          
+                            <div class="form-outline">
+                              <input type="text"
+                                     id="lastName"
+                                     class="form-control form-control-lg"
+                                     name="lastName"
+                                     placeholder="Enter last name"
+                                     pattern="^[a-zA-Z ]+"
+                                     th:field="${student.lastName}"
+                                     value="" disabled/>
+                              <label class="form-label" for="lastName">Last Name</label>
+                            </div>
+          
+                          </div>
+
+                        <div class="row">
+                          <div class="col-6">
+          
+                            <select class="select form-control-lg"
+                                    id="grade"
+                                    name="grade"
+                                    type="text"
+                                    th:field="${student.grade}"
+                                    disabled
+
+                            >
+                              
+                              <option value="0">None</option>
+                              <option value="1">Grade level 1</option>
+                              <option value="2">Grade level 2</option>
+                              <option value="3">Grade level 3</option>
+                              <option value="4">Grade level 4</option>
+                            </select>
+                            <label class="form-label select-label">Choose grade level </label>
+          
+                          </div>
+                          <div class="col-6">
+                          
+                            <div th:each="course: ${courses}">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="cid" id="flexCheckDefault" th:value="${course.courseName}">
+                                <label class="form-check-label" for="flexCheckDefault" th:text="${course.courseName}">
+                                
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        
+                        </div>
+                        <div class="row">
+                            
+                          <!-- <div class="col-6">
+                          <div class="mt-4 pt-2">
+                            <input class="btn btn-primary btn-lg" type="button" value="Review" id="review"/>
+                          </div>
+                          <div class="card" style="width: 18rem;">
+                            
+                              <h5 class="card-title">Review before submittig student details </h5>
+                              <p class="card-text" id="mypara">You can review by clicking review button after entering details. </p>
+                              <p id="count"> </p>
+                            
+                          </div>
+                        </div> -->
+                        <div class="col-2 offset-8 align-bottom">
+                        <div class="mt-4 pt-2">
+                          <input class="btn btn-primary btn-lg" type="submit" value="Submit" id="submit"/>
+                        </div>
+                       
+                      </div>
+                      <input type="hidden" name="id" th:field="*{id}"/>
+                       </form>
+                       <hr/>
+                       <a
+                       th:href="@{/scores/studentScore(id=${student.id})}"
+                       class="btn btn-outline-primary ml-2"
+                       >Add Score</a
+                     >
+                       <a th:href="@{/students/list}">Back to list</a>
+                     
+
+                    </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+        
+         
+          </section>
+
+
+          <script th:src="@{/javascript/info.js}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>

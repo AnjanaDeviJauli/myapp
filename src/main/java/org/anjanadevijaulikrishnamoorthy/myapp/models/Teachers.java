@@ -60,6 +60,11 @@ public class Teachers {
 
         course.getTeachers().add(this);
     }
+    public void deleteCourses(Course course) {
+        courses.remove(course);
+
+        course.getTeachers().remove(this);
+    }
 
     @Override
     public boolean equals(Object o) {

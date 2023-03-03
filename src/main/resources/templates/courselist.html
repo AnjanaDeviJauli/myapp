@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="fragrams/header :: header" />
+  <body>
+    <div>
+      <div th:replace="fragrams/onlynav :: onlynav" />
+    </div>
+    <div class="container">
+        <h2>List of courses</h2>
+        <div class="row">
+            <div class="col-6">
+           <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Teacher Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="course: ${allcourses}">
+                <th scope="row" th:text="${course.id}"></th>
+                <td th:text="${course.courseName}"></td>
+                <td >
+                    <p class="d-inline" th:each="teacher: ${course.teachers}">
+                        <span th:text="${teacher.firstNameT}"></span>
+                        <span th:text="${teacher.lastNameT}"></span>
+                        <br>
+                    </p>
+                </td>
+                <td> <a th:href="@{/courses/showUpdateForm(id=${course.id})}" class="btn btn-info">Update</a>
+                    <a th:href="@{/courses/deleteCourse(id=${course.id})}" class="btn btn-danger ml-2" >Delete</a>
+                  </td>
+             
+              </tr>
+            </tbody>
+          </table> 
+        </div>
+        </div>
+    </div>
+
+    <div th:replace="fragrams/footer :: footer" />
+  </body>
+</html>
