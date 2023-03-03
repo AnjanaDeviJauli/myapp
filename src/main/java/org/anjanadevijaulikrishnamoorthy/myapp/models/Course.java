@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.TeacherDTO;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.*;
 
@@ -22,13 +23,10 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
     int id;
+    @Length(min = 2,max = 50,message = "Minimum length is 2 and maximum length is 50")
     @NonNull
     @Column(name = "course_name", length = 48)
     String courseName;
-
-//    @ToString.Exclude
-//    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "courses",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    Set<Student> students = new LinkedHashSet<>();
 
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER,
@@ -50,14 +48,6 @@ public class Course {
     public int hashCode() {
         return Objects.hash(getId(), getCourseName());
     }
-//    public Set<TeacherDTO> getTeacherDTO() {
-//        Set<TeacherDTO> teacher= new LinkedHashSet<>();
-//        for (Teachers t:teachers){
-//            teacher.add(new TeacherDTO(t.getId(),t.getFirstNameT(),t.getLastNameT(),t.getEmail(),t.getUsername(),t.getCourses()));
-//        }
-//        return teacher;
-//
-//    }
 
 
     }

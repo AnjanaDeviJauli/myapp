@@ -1,5 +1,6 @@
 package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
@@ -10,6 +11,7 @@ import org.anjanadevijaulikrishnamoorthy.myapp.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -87,7 +89,7 @@ public class ScoreController {
         model.addAttribute("scores", studentScore);
 
         //  return "redirect:/students/findStudentbyParam?="+sid;
-        return "studentcourse";
+        return "scorelist";
     }
 
     //display student score when Add Score button is clicked for each student
@@ -101,18 +103,20 @@ public class ScoreController {
 
     //To enter/update mark for each Course assigned to a Student
     @PostMapping("/saveScoretoStudenCourse")
-    public String addStudentCourseScore(@RequestParam int id, @RequestParam(name = "mark") double mark, Model model) {
+    public String addStudentCourseScore(@Valid @RequestParam int id, @RequestParam(name = "mark") double mark, Model model) throws Exception {
         //Find the score corresponding to each course using score id
         Score s = scoreService.findByScoreId(id);
         log.warn(s.toString());
+        if(mark<=100 && mark>=0) {
 
-        //set mark for that score corresponding to the course since each score object has its
-        //student and course object
-        s.setMark(mark);
 
-        //save the updated score object
+            //set mark for that score corresponding to the course since each score object has its
+            //student and course object
+            s.setMark(mark);
 
-        scoreService.saveScore(s);
+            //save the updated score object
+            scoreService.saveScore(s);
+        }else throw new Exception();
 
         //The following attribute is used to display score details of the particular student
         List<Score> studentScore = scoreService.findScoreByStudent(s.getStudent());
@@ -143,12 +147,14 @@ public class ScoreController {
     @GetMapping("/highScoreStudents")
     public String findHighScoreStudent(Model model){
         model.addAttribute("allstu",highScoreStudent);
-        return "list";
+        model.addAttribute("message","Students in Extention/Advanced class");
+        return "birthdaystoday";
     }
     @GetMapping("/lowScoreStudents")
     public String findlowScoreStudent(Model model){
         model.addAttribute("allstu",lowScoreStudent);
-        return "list";
+        model.addAttribute("message","Students attending mandatory tutioring");
+        return "birthdaystoday";
     }
 
 

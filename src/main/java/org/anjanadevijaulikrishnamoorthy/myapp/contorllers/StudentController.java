@@ -1,14 +1,17 @@
 package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentRepoI;
 
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
+import org.anjanadevijaulikrishnamoorthy.myapp.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,17 +26,19 @@ import java.util.List;
 @RequestMapping(value = "students")
 public class StudentController {
     StudentRepoI studentRepoI;
+    StudentService studentService;
     @Autowired
-    public StudentController(StudentRepoI studentRepoI) {
+    public StudentController(StudentRepoI studentRepoI,StudentService studentService) {
         this.studentRepoI = studentRepoI;
+        this.studentService=studentService;
     }
 
     //Display all studentd to front end
     @GetMapping(value = {"/list"})
     public String findallstudents(Model model){
-        List<Student> allStud = studentRepoI.findAll();
-        int numberOfGirls = studentRepoI.fineNumberOfGirls();
-        int numberOfBoys = studentRepoI.fineNumberOfBoys();
+        List<Student> allStud = studentService.findAllStudents();
+        int numberOfGirls = studentService.findNumberOfGirls();
+        int numberOfBoys = studentService.findNumberOfBoys();
         model.addAttribute("allstu", allStud);
         model.addAttribute("numofgirls", numberOfGirls);
         model.addAttribute("numofboys", numberOfBoys);
@@ -43,67 +48,30 @@ public class StudentController {
     }
     @GetMapping(value = {"/first"})
     public String firstgrade(Model model){
-        byGrade(model,1);
+        studentService.byGrade(model,1);
         return "list";
     }
     @GetMapping(value = {"/second"})
     public String secondgrade(Model model){
-        byGrade(model,2);
+        studentService.byGrade(model,2);
         return "list";
     }
     @GetMapping(value = {"/third"})
     public String thirdgrade(Model model){
-     byGrade(model,3);
+     studentService.byGrade(model,3);
         return "list";
     }
     @GetMapping(value = {"/fourth"})
     public String fourthgrade(Model model){
-    byGrade(model,4);
+    studentService.byGrade(model,4);
         return "list";
     }
-    public void byGrade(Model model,int gradeLevel){
-        List<Student> students = studentRepoI.findByGrade(gradeLevel);
-        int numberOfBoys = studentRepoI.fineNumberOfBoysInGrade(gradeLevel);
-        int numberOfGirls = studentRepoI.fineNumberOfGirlsInGrade(gradeLevel);
-        //log.warn(fourthgradestudents.toString());
 
-        model.addAttribute("allstu", students);
-        model.addAttribute("numofgirls", numberOfGirls);
-        model.addAttribute("numofboys", numberOfBoys);
-        model.addAttribute("totalcount",numberOfBoys+numberOfGirls);
-        if(gradeLevel==1){
-            model.addAttribute("grade", "First Grade Students");
-        }else if(gradeLevel==2){
-            model.addAttribute("grade", "Second Grade Students");
-        }else if(gradeLevel==3){
-            model.addAttribute("grade", "Third Grade Students");
-        }else if(gradeLevel==4){
-            model.addAttribute("grade", "Fourth Grade Students");
-        }
-
-    }
     @GetMapping(value = {"/birthdaystoday"})
     public String birthday(Model model){
-      //  List<Student> birthdaysToday = studentRepoI.birhthdaysToday();
-        List<Student> birthdaysToday =new ArrayList<>();
-        List<Student> allStudents = studentRepoI.findAll();
-        LocalDate currentDate = LocalDate.now();
-        // get current date and month
-        int date = currentDate.getDayOfMonth();
-        Month month = currentDate.getMonth();
-
-        for(Student s : allStudents){
-            if(s.getDob().getDayOfMonth()==date && s.getDob().getMonth()==month ){
-                birthdaysToday.add(s);
-            }
-        }
-
-
-
-
-        //log.warn(birthdaysToday.toString());
-
+        List<Student> birthdaysToday=studentService.findStudentsHavingBirthdayToday();
         model.addAttribute("allstu", birthdaysToday);
+        model.addAttribute("message","Happy Birthday!!!");
         return "birthdaystoday";
     }
 
@@ -111,16 +79,12 @@ public class StudentController {
     @ResponseBody
     @GetMapping("/getAllStudents")
     public List<Student> getAllStudents(){
-        return studentRepoI.findAll();
+        return studentService.findAllStudents();
     }
     //Student form
     //Create student object
     @GetMapping("/studentform")
     public ModelAndView studentForm(){
-//        model.addAttribute("student", new Student());
-//
-//        log.warn("student form method");
-//        return "studentform";
         ModelAndView mv = new ModelAndView("studentform");
         Student s = new Student();
         mv.addObject("student",s);
@@ -129,21 +93,23 @@ public class StudentController {
     }
     //Save student object from student form
     @PostMapping("/savestudent")
-    public String studentProcess(@ModelAttribute("student") Student students){
+    public String studentProcess(@Valid @ModelAttribute("student") Student students, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            log.debug(bindingResult.getAllErrors().toString());
+            return "studentform";
+        }
         log.warn("student process method" + students);
-        //log.warn(students.toString());
         studentRepoI.save(students);
-
         return "studentform";
     }
 
 @PostMapping("/findstudentbyId")
-public String findStudentById(@RequestParam(required = false) int id,@PathVariable(required = false) int id1, Model model){
+public String findStudentById(@RequestParam(required = false) int id, Model model){
 
     try {
-        model.addAttribute("stu", studentRepoI.findById(id).get());
-        model.addAttribute("stu", studentRepoI.findById(id1).get());
-        log.warn(studentRepoI.findById(id).get().toString());
+        model.addAttribute("stu", studentService.findStudentById(id));
+
+        log.warn(studentService.findStudentById(id).toString());
     } catch (RuntimeException ex){
         ex.printStackTrace();
         model.addAttribute("student_not_found",String.format("Student: %d not found!",id));
@@ -153,7 +119,7 @@ public String findStudentById(@RequestParam(required = false) int id,@PathVariab
 }
 @PostMapping("/findStudentbyParam{id}")
 public String findStudent(@RequestParam(required = true) int id1, Model model){
-    model.addAttribute("stu", studentRepoI.findById(id1).get());
+    model.addAttribute("stu", studentService.findStudentById(id1));
     return "studentfind";
 }
 
@@ -164,9 +130,8 @@ public String findStudent(@RequestParam(required = true) int id1, Model model){
 
 
         try {
-            int id =studentRepoI.findByFirstNameAndLastName(firstName,lastName).getId();
-            model.addAttribute("stu",  studentRepoI.findById(id).get());
-            log.warn(studentRepoI.findByFirstNameAndLastName(firstName,lastName).toString());
+            int id =studentService.findStudentIdByFirstAndLastName(firstName,lastName);
+            model.addAttribute("stu",  studentService.findStudentById(id));
         } catch (RuntimeException ex){
             ex.printStackTrace();
             model.addAttribute("student_not_found",String.format("Student not found for the given first and last name combination!"));
@@ -182,7 +147,7 @@ public String findStudent(@RequestParam(required = true) int id1, Model model){
    @GetMapping("/showUpdateForm")
    public ModelAndView showUpdateForm(@RequestParam int id){
         ModelAndView mv = new ModelAndView("studentform");
-       Student s= studentRepoI.findById(id).get();
+       Student s= studentService.findStudentById(id);
        log.warn(s.getDob().toString());
        mv.addObject("student",s);
        return mv;
@@ -191,7 +156,7 @@ public String findStudent(@RequestParam(required = true) int id1, Model model){
 
     @GetMapping("/deleteStudent")
     public String deleteStudent(@RequestParam int id){
-        studentRepoI.deleteById(id);
+        studentService.deleteStudentById(id);
         return "redirect:/students/list";
     }
 

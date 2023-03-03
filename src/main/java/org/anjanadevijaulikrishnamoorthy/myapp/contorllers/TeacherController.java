@@ -1,5 +1,6 @@
 package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
@@ -11,6 +12,7 @@ import org.anjanadevijaulikrishnamoorthy.myapp.services.CourseService;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,7 +50,11 @@ public class TeacherController {
     }
     //save course object by getting values from course form
     @PostMapping("/saveteacher")
-    public String teacherProcess(@ModelAttribute("teacher") Teachers teacher){
+    public String teacherProcess(@Valid @ModelAttribute("teacher") Teachers teacher, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            log.debug(bindingResult.getAllErrors().toString());
+            return "teacherform";
+        }
         log.warn("teacher process method" + teacher);
         //log.warn(students.toString());
         teacherRepoI.save(teacher);

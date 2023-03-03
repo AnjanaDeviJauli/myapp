@@ -56,4 +56,22 @@ public class CourseService {
     public boolean findIfCourseExist(String name) {
        return courseRepoI.findAll().stream().anyMatch(course -> course.getCourseName().equals(name));
     }
+
+    public void saveCourse(Course course){
+        if (courseRepoI.findAll().stream().anyMatch(course1 -> course1.getId() == (course.getId()))) {
+            Course c = courseRepoI.findById(course.getId()).get();
+            c.setCourseName(course.getCourseName());
+            courseRepoI.save(c);
+
+        } else
+            courseRepoI.save(course);
+    }
+
+    public Course findCourseById(int id){
+        return courseRepoI.findById(id).get();
+    }
+
+    public void deleteCourseById(int id){
+        courseRepoI.deleteById(id);
+    }
 }

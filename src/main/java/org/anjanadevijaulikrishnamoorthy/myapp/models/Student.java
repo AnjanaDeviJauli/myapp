@@ -2,13 +2,18 @@ package org.anjanadevijaulikrishnamoorthy.myapp.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.ScoreService;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Date;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -27,16 +32,22 @@ public class Student {
     @Column(name = "student_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    @Length(min = 2,max = 50,message = "Minimum length is 2 and maximum length allowed is 50")
     @NonNull
     @Column(length = 48, name="first_name")
     String firstName;
+    @Length(min = 2,max = 50,message = "Minimum length is 2 and maximum length allowed is 50")
     @NonNull
     @Column(length = 48,name="last_name")
     String lastName;
+    @Past(message = "Enter year that is in past")
     @NonNull @Column(name="dob")
     LocalDate dob;
+
     @NonNull
+    @NotNull
     char gender;
+    @Range(min=1,max=4,message = "Minumum grade level is 1 and maximum grade level is 4")
     @NonNull
     int grade;
     @Transient

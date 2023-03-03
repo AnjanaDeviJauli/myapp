@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Range;
 
 @NoArgsConstructor
 @ToString

@@ -42,7 +42,10 @@
                                      pattern="^[a-zA-Z ]+"
                                      th:field="*{firstName}"
                                      value="${student.firstName}" required/>
-                              <label class="form-label" for="firstName">First Name</label>
+                                     <label class="form-label" for="firstName">First Name</label><br>
+                              <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error text-warning text-danger"></span>
+
+                             
                             </div>
           
                           </div>
@@ -57,7 +60,10 @@
                                      pattern="^[a-zA-Z ]+"
                                      th:field="*{lastName}"
                                      value="" required/>
-                              <label class="form-label" for="lastName">Last Name</label>
+                                     <label class="form-label" for="lastName">Last Name</label><br>
+                              <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error text-warning text-danger"></span>
+
+                          
                             </div>
           
                           </div>
@@ -78,7 +84,10 @@
                                      value="${student.dob}" 
                                      text="${student.dob}"
                                      required/>
-                              <label for="dob" class="form-label">Birthday </label>
+                                     <label for="dob" class="form-label">Birthday </label><br>
+                              <span th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}" class="error text-warning text-danger"></span>
+
+                             
                             </div>
           
                           </div>
@@ -93,6 +102,7 @@
                                      id="gender"
                                      th:field="*{gender}"
                                 value='F' checked />
+
                               <label class="form-check-label" >Female </label>
                             </div>
           
@@ -125,6 +135,8 @@
                               <option value="3">Grade level 3</option>
                               <option value="4">Grade level 4</option>
                             </select>
+                            <span th:if="${#fields.hasErrors('grade')}" th:errors="*{grade}" class="error text-warning text-danger"></span>
+
                             <label class="form-label select-label">Choose grade level </label>
           
                           </div>

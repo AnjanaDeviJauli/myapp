@@ -32,14 +32,17 @@
           
                             <div class="form-outline">
                               <input type="text"
-                                     id="firstName"
+                                     id="courseName"
                                      class="form-control form-control-lg"
-                                     name="firstName"
+                                     name="courseName"
                                      placeholder="Enter Course to add"
                                      pattern="^[a-zA-Z ]+"
                                      th:field="*{courseName}"
                                      value="" required/>
-                              <label class="form-label" for="firstName">Course Name</label>
+                                     <label class="form-label" for="courseName">Course Name</label><br>
+                                <span th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}" class="error text-warning text-danger"></span>
+
+                               
                             </div>
           
                           </div>
