@@ -79,7 +79,7 @@ public class Teachers {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Teachers teachers)) return false;
-        return getId() == teachers.getId() && getFirstNameT().equals(teachers.getFirstNameT()) && getLastNameT().equals(teachers.getLastNameT()) && getEmail().equals(teachers.getEmail());
+        return  getFirstNameT().equals(teachers.getFirstNameT()) && getLastNameT().equals(teachers.getLastNameT()) && getEmail().equals(teachers.getEmail());
     }
 
     @Override

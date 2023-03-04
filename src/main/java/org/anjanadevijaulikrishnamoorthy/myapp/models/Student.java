@@ -68,7 +68,7 @@ public class Student {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Student student)) return false;
-        return getId() == student.getId() && getGender() == student.getGender() && getGrade() == student.getGrade() && getAge() == student.getAge() && getFirstName().equals(student.getFirstName()) && getLastName().equals(student.getLastName()) && getDob().equals(student.getDob());
+        return  getGender() == student.getGender() && getGrade() == student.getGrade() && getAge() == student.getAge() && getFirstName().equals(student.getFirstName()) && getLastName().equals(student.getLastName()) && getDob().equals(student.getDob());
     }
 
     @Override

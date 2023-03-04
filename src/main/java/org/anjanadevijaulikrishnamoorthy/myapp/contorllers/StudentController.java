@@ -99,8 +99,10 @@ public class StudentController {
             return "studentform";
         }
         log.warn("student process method" + students);
+        if(!studentService.findAllStudents().contains(students)){
         studentRepoI.save(students);
-        model.addAttribute("inserted","Sucessfully registered the student");
+        model.addAttribute("inserted","Sucessfully registered the student");}
+        else{model.addAttribute("inserted","Student already exist");}
         return "studentform";
     }
 

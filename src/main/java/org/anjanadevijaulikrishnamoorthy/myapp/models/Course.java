@@ -41,7 +41,7 @@ public class Course {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Course course)) return false;
-        return getId() == course.getId() && getCourseName().equals(course.getCourseName());
+        return getCourseName().equals(course.getCourseName());
     }
 
     @Override

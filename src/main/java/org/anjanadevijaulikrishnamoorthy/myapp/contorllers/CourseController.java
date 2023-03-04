@@ -55,8 +55,10 @@ public class CourseController {
         }
         log.warn("course process method" + course);
         //log.warn(students.toString());
+        if(!courseService.findAllCourses().contains(course)){
         courseService.saveCourse(course);
-        model.addAttribute("inserted","Sucessfully added the course");
+        model.addAttribute("inserted","Sucessfully added the course");}
+        else{model.addAttribute("inserted","Course already exist");}
         return "courseform";
     }
 

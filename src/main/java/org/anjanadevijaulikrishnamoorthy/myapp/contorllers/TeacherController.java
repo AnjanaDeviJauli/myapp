@@ -57,8 +57,10 @@ public class TeacherController {
         }
         log.warn("teacher process method" + teacher);
         //log.warn(students.toString());
+        if(!teacherRepoI.findAll().contains(teacher)){
         teacherRepoI.save(teacher);
-        model.addAttribute("inserted","Succesfully added the teacher");
+        model.addAttribute("inserted","Succesfully added the teacher");}
+        else{model.addAttribute("inserted","Teacher already exist");}
         return "teacherform";
     }
 
