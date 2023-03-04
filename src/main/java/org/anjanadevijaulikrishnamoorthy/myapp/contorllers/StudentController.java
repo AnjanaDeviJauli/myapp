@@ -93,13 +93,14 @@ public class StudentController {
     }
     //Save student object from student form
     @PostMapping("/savestudent")
-    public String studentProcess(@Valid @ModelAttribute("student") Student students, BindingResult bindingResult){
+    public String studentProcess(@Valid @ModelAttribute("student") Student students, BindingResult bindingResult,Model model){
         if(bindingResult.hasErrors()){
             log.debug(bindingResult.getAllErrors().toString());
             return "studentform";
         }
         log.warn("student process method" + students);
         studentRepoI.save(students);
+        model.addAttribute("inserted","Sucessfully registered the student");
         return "studentform";
     }
 

@@ -131,12 +131,14 @@ public class ScoreController {
         model.addAttribute("examgrade",examgrade);
 
 
-        if(examgrade.equalsIgnoreCase("A")){
+        if(examgrade.equalsIgnoreCase("A") && !highScoreStudent.contains(s.getStudent())){
             highScoreStudent.add(s.getStudent());
 
         }else if(examgrade.equalsIgnoreCase("f")||(examgrade.equalsIgnoreCase("e"))
         || (examgrade.equalsIgnoreCase("d"))||(examgrade.equalsIgnoreCase("c"))){
+            if(!lowScoreStudent.contains(s.getStudent()))
             lowScoreStudent.add(s.getStudent());
+
 
         }
 

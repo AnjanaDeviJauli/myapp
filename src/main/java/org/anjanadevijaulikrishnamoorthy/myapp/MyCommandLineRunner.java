@@ -115,7 +115,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
             LocalDate.of(2012, 5, 2), 'F', 4));
     Student s30 = (new Student("Ella", "Bond",
             LocalDate.of(2012, 9, 1), 'F', 4));
-   studentRepoI.saveAll(List.of(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,
+   studentRepoI.saveAllAndFlush(List.of(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,
            s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,
            s29,s30));
 
@@ -124,7 +124,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
    Course language = new Course("English");
    Course social = new Course("Social");
 
-   courseRepoI.saveAll(List.of(math,science,social,language));
+   courseRepoI.saveAllAndFlush(List.of(math,science,social,language));
 
 
 

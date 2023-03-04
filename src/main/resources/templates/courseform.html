@@ -48,7 +48,8 @@
                           </div>
              
                         </div>
-          
+                        <span th:if="${inserted}" th:text="${inserted}" class="text-primary"></span>
+
           
 
                         <div class="row">
@@ -58,6 +59,7 @@
                         <div class="mt-4 pt-2">
                           <input class="btn btn-primary btn-lg" type="submit" value="Submit" id="submit"/>
                         </div>
+
                       </div>
                       <input type="hidden" name="id" th:field="*{id}"/>
                        </form>

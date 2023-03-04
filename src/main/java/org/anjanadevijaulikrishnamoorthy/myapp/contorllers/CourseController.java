@@ -48,7 +48,7 @@ public class CourseController {
 
     //save course object by getting values from course form
     @PostMapping("/savecourse")
-    public String courseProcess(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult) {
+    public String courseProcess(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult,Model model) {
         if(bindingResult.hasErrors()){
             log.debug(bindingResult.getAllErrors().toString());
             return "courseform";
@@ -56,6 +56,7 @@ public class CourseController {
         log.warn("course process method" + course);
         //log.warn(students.toString());
         courseService.saveCourse(course);
+        model.addAttribute("inserted","Sucessfully added the course");
         return "courseform";
     }
 

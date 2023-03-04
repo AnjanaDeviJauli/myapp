@@ -32,11 +32,12 @@
             
                   <form id="myform" method="post" name="myForm" th:action="@{/scores/saveScoretoStudenCourse(id=${score.id})}" autocomplete="off"  >
                   <div class="input-group mb-3">
-                      <input list="Score" id="mark" name="mark" placeholder="Type Score" 
+                      <input list="Score" id="mark" name="mark" placeholder="Type Score"
                              aria-label="Type Score" aria-describedby="button-addon2" th:value="${score.mark}" />
-                             
+                        
                        <!-- <input type="hidden" name="id" th:field="${score.id}"/> -->
                       <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
+
                   </div>
       
                   

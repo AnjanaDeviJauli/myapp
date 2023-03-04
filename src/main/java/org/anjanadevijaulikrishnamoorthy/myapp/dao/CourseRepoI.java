@@ -1,14 +1,14 @@
 package org.anjanadevijaulikrishnamoorthy.myapp.dao;
 
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
-import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public interface CourseRepoI extends JpaRepository<Course,Integer> {
     @Query("SELECT T.courses FROM Teachers T WHERE T.id=?1")
     List<Course> findCourseAssignedToTeacher(int id);

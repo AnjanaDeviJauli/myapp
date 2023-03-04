@@ -50,7 +50,7 @@ public class TeacherController {
     }
     //save course object by getting values from course form
     @PostMapping("/saveteacher")
-    public String teacherProcess(@Valid @ModelAttribute("teacher") Teachers teacher, BindingResult bindingResult){
+    public String teacherProcess(@Valid @ModelAttribute("teacher") Teachers teacher, BindingResult bindingResult,Model model){
         if(bindingResult.hasErrors()){
             log.debug(bindingResult.getAllErrors().toString());
             return "teacherform";
@@ -58,6 +58,7 @@ public class TeacherController {
         log.warn("teacher process method" + teacher);
         //log.warn(students.toString());
         teacherRepoI.save(teacher);
+        model.addAttribute("inserted","Succesfully added the teacher");
         return "teacherform";
     }
 

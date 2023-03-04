@@ -45,7 +45,7 @@ public class Student {
     LocalDate dob;
 
     @NonNull
-    @NotNull
+    @NotNull(message = "select one")
     char gender;
     @Range(min=1,max=4,message = "Minumum grade level is 1 and maximum grade level is 4")
     @NonNull

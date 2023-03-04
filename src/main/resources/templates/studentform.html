@@ -115,6 +115,8 @@
                                 value='M' />
                               <label class="form-check-label" >Male </label>
                             </div>
+                            <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="error text-warning text-danger"></span>
+
                           </div>
                         </div>
 
@@ -163,6 +165,8 @@
                       </div>
                       <input type="hidden" name="id" th:field="*{id}"/>
                        </form>
+                       <span th:if="${inserted}" th:text="${inserted}" class="text-primary"></span>
+
                        <hr/>
                        <a th:href="@{/students/list}">Back to list</a>
 

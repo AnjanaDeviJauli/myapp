@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface ScoreRepoI extends JpaRepository<Score,Integer> {
     @Query("SELECT S FROM Score S WHERE S.student=?1")
     List<Score> findScoreByStudent(Student s);
