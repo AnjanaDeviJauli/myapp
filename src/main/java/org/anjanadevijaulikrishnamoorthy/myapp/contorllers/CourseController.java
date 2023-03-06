@@ -1,13 +1,8 @@
 package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
-
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.CourseDTO;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
-
-import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.CourseService;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
+
+
 
 @Slf4j
 @Controller

@@ -6,7 +6,7 @@ import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.TeacherDTO;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
-import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
+
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.CourseService;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;

@@ -33,6 +33,8 @@ public class StudentController {
         this.studentService=studentService;
     }
 
+
+
     //Display all studentd to front end
     @GetMapping(value = {"/list"})
     public String findallstudents(Model model){

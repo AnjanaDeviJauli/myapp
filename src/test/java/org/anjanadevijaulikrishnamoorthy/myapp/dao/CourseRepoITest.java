@@ -21,19 +21,16 @@ class CourseRepoITest {
         this.courseRepoI = courseRepoI;
         this.teacherRepoI=teacherRepoI;
     }
-    Course java= new Course("Mathemetics");
+    Course math= new Course("Mathemetics");
 
 
     @Test
     void testFindByCourseName(){
-        assertThat(courseRepoI.findByCourseName("Mathemetics").get().getCourseName()).isEqualTo(java.getCourseName());
+        assertThat(courseRepoI.findByCourseName("Mathemetics").get().equals(math)) ;
     }
 
-//    @Test
-//    void testfindCourseAssignedToTeacher(){
-//       assertThat(courseRepoI.findTeacherAssignedToCourse(1)).isEqualTo(teacherRepoI.findById(2));
-//
-//    }
+
+
 
 
 }

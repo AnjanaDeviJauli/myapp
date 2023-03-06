@@ -12,4 +12,6 @@ public class HomeControler {
     public String login(){
         return "index";
     }
+    @GetMapping(value ={"/home"})
+    public String home(){ return  "home";}
 }
