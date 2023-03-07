@@ -4,14 +4,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.ScoreRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.StudentRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
-import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
-import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
-import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
-import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
+import org.anjanadevijaulikrishnamoorthy.myapp.dao.*;
+import org.anjanadevijaulikrishnamoorthy.myapp.models.*;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -32,6 +28,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     final CourseRepoI courseRepoI;
     final TeacherRepoI teacherRepoI;
     final ScoreRepoI scoreRepoI;
+    final AuthGroupRepoI authGroupRepoI;
 
 
     @Autowired
@@ -39,13 +36,15 @@ public class MyCommandLineRunner implements CommandLineRunner {
                                CourseRepoI courseRepoI,
                                TeacherRepoI teacherRepoI,
                                ScoreRepoI scoreRepoI,
-                               TeacherService teacherService
+                               TeacherService teacherService,
+                               AuthGroupRepoI authGroupRepoI
                               ) {
         this.studentRepoI = studentRepoI;
         this.courseRepoI = courseRepoI;
         this.teacherRepoI = teacherRepoI;
         this.scoreRepoI=scoreRepoI;
         this.teacherService=teacherService;
+        this.authGroupRepoI=authGroupRepoI;
 
     }
 
@@ -129,30 +128,34 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
 
 
-//        try {
-//            Thread.sleep(2000);
-//            Student s = studentRepoI.findById(1).get();
-//            Course c= courseRepoI.findById(1).get();
-//            //Get database connection, delete unused data from DB
-//            Score s1m = new Score(s,c,70);
-//           scoreRepoI.save(s1m);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
 
    Teachers t1 = new Teachers("Ashley","Minton",
-           "ashley@gmail.com","ashleyminton","1234");
+           "ashley@gmail.com","ashleyminton","password");
    Teachers t2 = new Teachers("Elizabeth","Watson",
-                "elizabeth@gmail.com","elizabethwatson","1234");
+                "elizabeth@gmail.com","elizabethwatson","password");
    Teachers t3 = new Teachers("Jamey","Duncan",
-                "jamey@gmail.com","jameyduncan","1234");
+                "jamey@gmail.com","jameyduncan","password");
    Teachers t4 = new Teachers("Anjana","Devi",
-                "anjana@gmail.com","anjanadevi","1234");
+                "anjana@gmail.com","anjanadevi","password");
    Teachers t5 = new Teachers("Vathsala","Suresh",
-                "vathsala@gmail.com","vathsalasuresh","1234");
+                "vathsala@gmail.com","vathsalasuresh","password");
+
+
 
    teacherRepoI.saveAll(List.of(t1,t2,t3,t4,t5));
+
+        AuthGroup authGroup1 = new AuthGroup("ashley@gmail.com", "ROLE_ADMIN");
+        AuthGroup authGroup2 = new AuthGroup("ashley@gmail.com", "ROLE_USER");
+        AuthGroup authGroup3 = new AuthGroup("elizabeth@gmail.com", "ROLE_USER");
+        AuthGroup authGroup4 = new AuthGroup("anjana@gmail.com", "ROLE_ADMIN");
+
+
+        authGroupRepoI.save(authGroup1);
+        authGroupRepoI.save(authGroup2);
+        authGroupRepoI.save(authGroup3);
+        authGroupRepoI.save(authGroup4);
+
+
 
 
 

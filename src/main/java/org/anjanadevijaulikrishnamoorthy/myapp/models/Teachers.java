@@ -7,11 +7,11 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.*;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @ToString
 //@AllArgsConstructor
@@ -43,10 +43,22 @@ public class Teachers {
     @Column(length = 48)
     String username;
 
-    @NonNull
-    @NotBlank(message="please enter valid password")
-    @Column(length = 48)
+    @NonNull  @Setter(AccessLevel.NONE)
     String password;
+
+    public String setPassword(String password)  {
+      return   this.password = new BCryptPasswordEncoder(4).encode(password);
+    }
+
+    public Teachers( @NonNull String firstNameT, @NonNull String lastNameT, @NonNull String email, @NonNull String username, @NonNull String password) {
+
+        this.firstNameT = firstNameT;
+        this.lastNameT = lastNameT;
+        this.email = email;
+        this.username = username;
+        this.password = setPassword(password);
+    }
+
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "teachers", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH,CascadeType.REMOVE})
     Set<Course> courses = new LinkedHashSet<>();

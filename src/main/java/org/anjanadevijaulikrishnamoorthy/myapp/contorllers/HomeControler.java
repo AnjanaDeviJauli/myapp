@@ -8,10 +8,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeControler {
 
-    @GetMapping(value={"/index"})
+    @GetMapping(value={"/login"})
     public String login(){
-        return "index";
+        return "login";
     }
-    @GetMapping(value ={"/home"})
-    public String home(){ return  "home";}
+    @GetMapping(value ={"/index"})
+    public String home(){ return  "index";}
+
+    @GetMapping("/403")
+    public String access(){
+        return "403";
+    }
+
+    @GetMapping("/error")
+    public String error(){
+        return "error";
+    }
+
 }

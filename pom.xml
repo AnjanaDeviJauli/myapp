@@ -8,15 +8,23 @@
 		<version>3.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.perscholas</groupId>
-	<artifactId>cmsapp</artifactId>
+	<groupId>org.anjanadevijaulikrishnamoorthy</groupId>
+	<artifactId>myapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>StudentManagementSystem</name>
-	<description>Based on your SBA - Hibernate</description>
+	<name>StudentDatabaseAdministrationApplication</name>
+	<description>Cohort project at Per Scholas</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

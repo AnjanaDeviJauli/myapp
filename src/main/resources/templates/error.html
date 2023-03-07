@@ -6,7 +6,15 @@
       <div th:replace="fragrams/nav :: nav" />
     </div>
     <div class="container">
+        <section class="row m-1">
+            <article class="col">
+            </article>
+            <article class="row">
+             <h1 class="text-danger">ERROR</h1>
 
+                <h1 th:text="${error}" class="text-danger text-uppercase"></h1>
+            </article>
+          </section>
     </div>
 
     <div th:replace="fragrams/footer :: footer" />

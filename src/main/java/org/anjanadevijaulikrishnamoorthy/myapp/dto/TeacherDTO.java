@@ -23,6 +23,7 @@ public class TeacherDTO {
     String email;
 
     String username;
+
     List<String> courses;
 
     @Override
