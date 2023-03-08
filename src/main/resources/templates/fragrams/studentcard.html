@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  >
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -34,15 +35,17 @@
           <li class="list-group-item">
             <span>Age:</span> <span th:text="${student.age}"></span>
           </li>
-
-          <li>
+          
+          <li >
             <a
               th:href="@{/students/showUpdateForm(id=${student.id})}"
+              sec:authorize="hasRole('ADMIN')"
               class="btn btn-outline-primary"
               >Update</a
             >
             <a
               th:href="@{/students/deleteStudent(id=${student.id})}"
+              sec:authorize="hasRole('ADMIN')"
               class="btn btn-outline-danger ml-2"
               >Delete</a
             >
@@ -50,6 +53,7 @@
           <li>
             <a
               th:href="@{/scores/selectStudentToAddCourses(id=${student.id})}"
+              sec:authorize="hasRole('ADMIN')"
               class="btn btn-outline-primary ml-2"
               >Add Course</a
             >
@@ -59,6 +63,7 @@
               >Add Score</a
             >
           </li>
+        
         </ul>
       </div>
     </div>

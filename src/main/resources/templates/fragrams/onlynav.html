@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,19 +20,19 @@
           <div class="navbar-nav">
               <a class=" nav-item nav-link" th:href="@{/}">Home</a>
             
-            <div class="dropdown">
+            <div class="dropdown" sec:authorize="hasRole('ADMIN')">
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Register
               </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
                 <li><a class="dropdown-item" th:href="@{/students/studentform}">Register Student</a></li>
                 <li><a class="dropdown-item" th:href="@{/courses/courseform}">Register Course</a></li>
                 <li><a class="dropdown-item" th:href="@{/teachers/teacherform}">Register Teacher</a></li>
               </ul>
             </div>
             <a class="nav-item nav-link" th:href="@{/students/list}">All students</a>
-            <a class="nav-item nav-link" th:href="@{/courses/courselist}">All courses</a>
-            <a class="nav-item nav-link" th:href="@{/teachers/teacherlist}">All teachers</a>
+            <a class="nav-item nav-link" th:href="@{/courses/courselist}" sec:authorize="hasRole('ADMIN')">All courses</a>
+            <a class="nav-item nav-link" th:href="@{/teachers/teacherlist}" sec:authorize="hasRole('ADMIN')">All teachers</a>
             <a class="nav-item nav-link" th:href="@{/students/birthdaystoday}">Birthdays today</a>
             
             <div class="dropdown">
@@ -62,6 +62,9 @@
         </div>
       
           <a class="nav-item nav-link offset-2" th:href="@{/login}">Login</a>
+          <a class="nav-item nav-link " th:href="@{/logout}"sec:authorize="hasAnyRole('ADMIN','USER')"
+          >Logout</a>
+      
       
         
         </div>

@@ -144,13 +144,13 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
    teacherRepoI.saveAll(List.of(t1,t2,t3,t4,t5));
 
-        AuthGroup authGroup1 = new AuthGroup("ashley@gmail.com", "ROLE_ADMIN");
+        //AuthGroup authGroup1 = new AuthGroup("ashley@gmail.com", "ROLE_ADMIN");
         AuthGroup authGroup2 = new AuthGroup("ashley@gmail.com", "ROLE_USER");
         AuthGroup authGroup3 = new AuthGroup("elizabeth@gmail.com", "ROLE_USER");
         AuthGroup authGroup4 = new AuthGroup("anjana@gmail.com", "ROLE_ADMIN");
 
 
-        authGroupRepoI.save(authGroup1);
+        //authGroupRepoI.save(authGroup1);
         authGroupRepoI.save(authGroup2);
         authGroupRepoI.save(authGroup3);
         authGroupRepoI.save(authGroup4);

@@ -45,14 +45,13 @@ public class MySecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/","/index","/css/**", "/javascript/**").permitAll()
-                        .requestMatchers("/students/**","/teachers/**","/courses/**","/scores/**").hasRole("ADMIN")
-                        .requestMatchers("/students/list").hasRole("USER")
+                        .requestMatchers("/students/**","/scores/**","/home").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/teachers/**","/students/**","/scores/**","/courses/**","/home").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .usernameParameter("email")
+                        .usernameParameter("username")
                         .passwordParameter("password")
                         .loginProcessingUrl("/login/processing")
                         .defaultSuccessUrl("/")
