@@ -1,5 +1,5 @@
-# myapp
 Spring Boot Student Database Administration Project
+
 The Spring Boot student database administration project is a web-based application designed to help manage student data in an educational institution.
 The application is built using the Spring Boot framework, which provides a robust and scalable platform for developing enterprise-grade applications.
 
