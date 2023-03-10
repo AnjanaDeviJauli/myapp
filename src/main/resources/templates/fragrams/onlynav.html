@@ -60,7 +60,6 @@
           </div>
 
         </div>
-      
           <a class="nav-item nav-link offset-2" th:href="@{/login}">Login</a>
           <a class="nav-item nav-link " th:href="@{/logout}"sec:authorize="hasAnyRole('ADMIN','USER')"
           >Logout</a>
@@ -68,10 +67,6 @@
       
         
         </div>
-       <form class="form-inline nav-item ">
-
-          <a class="btn btn-outline-success my-2 my-sm-0" href="../index"  type="button">Logout</a>
-        </form>
       </nav>
     </div>
 </body>

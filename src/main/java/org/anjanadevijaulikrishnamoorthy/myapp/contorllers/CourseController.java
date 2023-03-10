@@ -32,6 +32,8 @@ public class CourseController {
 
         this.teacherService = teacherService;
     }
+    String courseform = "courseform";
+    String message ="message";
 
     //Course form
     //Create course object
@@ -39,7 +41,7 @@ public class CourseController {
     public String courseForm(Model model) {
         model.addAttribute("course", new Course());
         log.warn("course form method");
-        return "courseform";
+        return courseform;
     }
 
     //save course object by getting values from course form
@@ -47,15 +49,15 @@ public class CourseController {
     public String courseProcess(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult,Model model) {
         if(bindingResult.hasErrors()){
             log.debug(bindingResult.getAllErrors().toString());
-            return "courseform";
+            return courseform;
         }
         log.warn("course process method" + course);
-        //log.warn(students.toString());
+
         if(!courseService.findAllCourses().contains(course)){
         courseService.saveCourse(course);
         model.addAttribute("inserted","Sucessfully added the course");}
         else{model.addAttribute("inserted","Course already exist");}
-        return "courseform";
+        return courseform;
     }
 
 
@@ -90,9 +92,9 @@ public class CourseController {
         if(courseService.findIfCourseExist(name)){
         teacherService.deletCourse(id,name);
         String teacherFirstAndLastName=teacherService.findTeacherByIdFirstNameAndLastName(id);
-        model.addFlashAttribute("message",String.format("Deleted %s course assigned to %s ",name,teacherFirstAndLastName));}
+        model.addFlashAttribute(message,String.format("Deleted %s course assigned to %s ",name,teacherFirstAndLastName));}
         else{
-            model.addFlashAttribute("message", String.format("Couldn't delete %s to %s because course don't exist",
+            model.addFlashAttribute(message, String.format("Couldn't delete %s to %s because course don't exist",
                     name, teacherService.findTeacherByIdFirstNameAndLastName(id)));
         }
         return "redirect:/teachers/teacherlist";
@@ -109,18 +111,18 @@ public class CourseController {
         if (isCourseNameValid) {
             try {
                 teacherService.addCourse(id, courseService.findCourseByName(name));
-                model.addFlashAttribute("message", String.format("Added %s to %s",
+                model.addFlashAttribute(message, String.format("Added %s to %s",
                         name, teacherFirstAndLastName));
                 log.info(String.format
                         ("Added %s to the teacher %S",
                                 name, teacherFirstAndLastName));
             } catch (RuntimeException ex) {
-                model.addFlashAttribute("message", String.format("Couldn't persist %s to %s", name, teacherFirstAndLastName));
+                model.addFlashAttribute(message, String.format("Couldn't persist %s to %s", name, teacherFirstAndLastName));
                 log.error(String.format("Couldn't persist %s to %s", name, teacherFirstAndLastName));
                 ex.printStackTrace();
             }
         } else {
-            model.addFlashAttribute("message", String.format("Couldn't persist %s to %s because course don't exist",
+            model.addFlashAttribute(message, String.format("Couldn't persist %s to %s because course don't exist",
                     name, teacherService.findTeacherByIdFirstNameAndLastName(id)));
             log.warn(String.format("Couldn't persist %s to %s because course doesn't exist", name, id));
         }

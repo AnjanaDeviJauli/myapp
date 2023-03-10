@@ -45,6 +45,7 @@ public class MySecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/","/index","/css/**", "/javascript/**", "/login/**").permitAll()
                         .requestMatchers("/students/**","/scores/**","/home").hasAnyRole("USER","ADMIN")
                         .requestMatchers("/teachers/**","/students/**","/scores/**","/courses/**","/home").hasRole("ADMIN")
                         .anyRequest().authenticated()

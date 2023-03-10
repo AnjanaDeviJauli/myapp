@@ -11,7 +11,6 @@ import org.anjanadevijaulikrishnamoorthy.myapp.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,6 +36,9 @@ public class ScoreController {
         this.courseService = courseService;
         this.studentService = studentService;
     }
+    String message="message";
+    String scores = "scores";
+    String scorelist = "scorelist";
 
     //Show registration form to assign course for each student
     @GetMapping("/selectStudentToAddCourses")
@@ -56,7 +58,7 @@ public class ScoreController {
 
         //Checking null if all course is already assigned to student
         if (c == null) {
-            model.addAttribute("message", "No more course to add");
+            model.addAttribute(message, "No more course to add");
             throw new Exception();
         }
 
@@ -86,10 +88,10 @@ public class ScoreController {
         studentScore = scoreService.findScoreByStudent(s);
         model.addAttribute("student", s);
         model.addAttribute("courses", courseAssignedToStudent);
-        model.addAttribute("scores", studentScore);
+        model.addAttribute(scores, studentScore);
 
         //  return "redirect:/students/findStudentbyParam?="+sid;
-        return "scorelist";
+        return scorelist;
     }
 
     //display student score when Add Score button is clicked for each student
@@ -97,8 +99,8 @@ public class ScoreController {
     public String studentscore(@RequestParam int id, Model model) {
         Student s = studentService.findStudentById(id);
         List<Score> studentScore = scoreService.findScoreByStudent(s);
-        model.addAttribute("scores", studentScore);
-        return "scorelist";
+        model.addAttribute(scores, studentScore);
+        return scorelist;
     }
 
     //To enter/update mark for each Course assigned to a Student
@@ -120,7 +122,7 @@ public class ScoreController {
 
         //The following attribute is used to display score details of the particular student
         List<Score> studentScore = scoreService.findScoreByStudent(s.getStudent());
-        model.addAttribute("scores", studentScore);
+        model.addAttribute(scores, studentScore);
 
         //Finding the average of the mark for that student
         Double average = scoreService.findStudentAverageScore(s.getStudent());
@@ -143,19 +145,19 @@ public class ScoreController {
         }
 
         //display the score details of the student with input form to enter score/mark.
-        return "scorelist";
+        return scorelist;
     }
 
     @GetMapping("/highScoreStudents")
     public String findHighScoreStudent(Model model){
         model.addAttribute("allstu",highScoreStudent);
-        model.addAttribute("message","Students in Extention/Advanced class");
+        model.addAttribute(message,"Students in Extention/Advanced class");
         return "birthdaystoday";
     }
     @GetMapping("/lowScoreStudents")
     public String findlowScoreStudent(Model model){
         model.addAttribute("allstu",lowScoreStudent);
-        model.addAttribute("message","Students attending mandatory tutioring");
+        model.addAttribute(message,"Students attending mandatory tutioring");
         return "birthdaystoday";
     }
 

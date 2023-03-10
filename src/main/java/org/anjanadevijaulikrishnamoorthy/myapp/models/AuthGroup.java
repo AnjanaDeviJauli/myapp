@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Objects;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -25,5 +27,15 @@ public class AuthGroup {
     @NonNull
     String role;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AuthGroup authGroup)) return false;
+        return getEmail().equals(authGroup.getEmail()) && getRole().equals(authGroup.getRole());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail(), getRole());
+    }
 }

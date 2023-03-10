@@ -1,6 +1,22 @@
+console.log("inside my javascript")
+var selectedfiels = document.getElementById("reference");
 
-document.getElementById("myBtn").addEventListener("click", displayDate);
+/*<![CDATA[*/
+var myval = /*[[${student}]]*/ "Test";
+/*]]>*/
 
-function displayDate() {
-  document.getElementById("demo").innerHTML = Date();
+//var dateofbirth =document.getElementById("dob");
+
+selectedfiels.addEventListener("click", RefernceDob);
+function RefernceDob()
+{
+    
+var t=document.createTextNode(myval[0].dob);
+var p = document.createElement("P");
+//attach text to para
+p.appendChild(t);
+//attach para to div
+selectedfiels.appendChild(p);
+
 }
+

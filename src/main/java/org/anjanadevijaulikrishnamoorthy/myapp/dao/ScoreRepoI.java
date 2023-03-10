@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface ScoreRepoI extends JpaRepository<Score,Integer> {
     @Query("SELECT S FROM Score S WHERE S.student=?1")
@@ -15,9 +16,6 @@ public interface ScoreRepoI extends JpaRepository<Score,Integer> {
 
     @Query("SELECT S.course from Score S WHERE S.student=?1")
     List<Course> findCourseByStudent(Student s);
-
-    @Query("SELECT AVG(S.mark) FROM Score S WHERE S.student=?1")
-    Double findStudentAverageScore(Student s);
 
     @Query("SELECT SUM(S.mark) FROM Score S WHERE S.student=?1")
     Double findStudentScoreSum(Student s);
