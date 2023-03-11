@@ -40,7 +40,7 @@ public class CourseController {
     @GetMapping("/courseform")
     public String courseForm(Model model) {
         model.addAttribute("course", new Course());
-        log.warn("course form method");
+        log.warn("Course registration form");
         return courseform;
     }
 
@@ -51,7 +51,7 @@ public class CourseController {
             log.debug(bindingResult.getAllErrors().toString());
             return courseform;
         }
-        log.warn("course process method" + course);
+        log.warn("Saving course:" + course);
 
         if(!courseService.findAllCourses().contains(course)){
         courseService.saveCourse(course);
@@ -65,6 +65,7 @@ public class CourseController {
     @GetMapping(value = {"/courselist"})
     public String findallcourses(Model model) {
         List<CourseDTO> courses = courseService.getCourseEssInfo();
+        log.warn("showing curselist using CourseDTO");
         model.addAttribute("allcourses", courses);
         return "courselist";
     }
@@ -89,7 +90,7 @@ public class CourseController {
     //Delete course assigned to  Teacher
     @PostMapping ("{id}/deleteCourseFromTeacher")
     public String deleteCourseAssignedToTeacher(@RequestParam("course") String name,@PathVariable("id") int id,RedirectAttributes model){
-        if(courseService.findIfCourseExist(name)){
+        if(teacherService.findIFCourseAssignedToTeacher(id,name)){
         teacherService.deletCourse(id,name);
         String teacherFirstAndLastName=teacherService.findTeacherByIdFirstNameAndLastName(id);
         model.addFlashAttribute(message,String.format("Deleted %s course assigned to %s ",name,teacherFirstAndLastName));}

@@ -12,14 +12,7 @@ public interface StudentRepoI extends JpaRepository<Student,Integer> {
     @Query("SELECT S FROM Student S WHERE S.grade=?1")
     List<Student> findByGrade(int grade);
 
-    @Query("SELECT S FROM Student S WHERE S.firstName=?1")
-    List<Student> findByGrade(String firstName);
-
    Student findByFirstNameAndLastName(String firstName,String lastName);
-
-
-
-
 
     @Query("SELECT count(S.gender) fROM Student S where S.gender='M'")
     Integer fineNumberOfBoys();

@@ -22,70 +22,85 @@ import java.util.List;
 @Transactional(rollbackOn = {DataAccessException.class})
 public class StudentService {
     StudentRepoI studentRepoI;
+
     @Autowired
     public StudentService(StudentRepoI studentRepoI) {
         this.studentRepoI = studentRepoI;
     }
 
-    public Student findStudentById(int id){
+
+    //Service layer for methods in repository
+    public Student findStudentById(int id) {
         return studentRepoI.findById(id).get();
     }
 
-   public List<Student> findAllStudents(){
+    public List<Student> findAllStudents() {
         return studentRepoI.findAll();
-   }
+    }
 
-   public int findNumberOfGirls(){
+    public int findNumberOfGirls() {
         return studentRepoI.fineNumberOfGirls();
-   }
+    }
 
-   public int findNumberOfBoys(){
+    public int findNumberOfBoys() {
         return studentRepoI.fineNumberOfBoys();
-   }
+    }
 
-    public void byGrade(Model model, int gradeLevel){
+    public int findStudentIdByFirstAndLastName(String firstName, String lastName) {
+        return studentRepoI.findByFirstNameAndLastName(firstName, lastName).getId();
+    }
+
+    public void deleteStudentById(int id) {
+        studentRepoI.deleteById(id);
+    }
+
+    //finding student by grade level and store them in the model attribute
+    public void byGrade(Model model, int gradeLevel) {
         List<Student> students = studentRepoI.findByGrade(gradeLevel);
         int numberOfBoys = studentRepoI.fineNumberOfBoysInGrade(gradeLevel);
         int numberOfGirls = studentRepoI.fineNumberOfGirlsInGrade(gradeLevel);
-        //log.warn(fourthgradestudents.toString());
 
+        log.warn("students in %d grade", gradeLevel);
+        log.warn(students.toString());
+        log.warn("number of girls: %d", numberOfGirls);
+        log.warn("number of boys:%d", numberOfBoys);
+
+        //binding students in particular grade in model attribute "allstu" and finding number of girls
+        //and boys in that grade
         model.addAttribute("allstu", students);
         model.addAttribute("numofgirls", numberOfGirls);
         model.addAttribute("numofboys", numberOfBoys);
-        model.addAttribute("totalcount",numberOfBoys+numberOfGirls);
-        if(gradeLevel==1){
+        model.addAttribute("totalcount", numberOfBoys + numberOfGirls);
+
+        //display title with the model attribute variable in front end
+        if (gradeLevel == 1) {
             model.addAttribute("grade", "First Grade Students");
-        }else if(gradeLevel==2){
+        } else if (gradeLevel == 2) {
             model.addAttribute("grade", "Second Grade Students");
-        }else if(gradeLevel==3){
+        } else if (gradeLevel == 3) {
             model.addAttribute("grade", "Third Grade Students");
-        }else if(gradeLevel==4){
+        } else if (gradeLevel == 4) {
             model.addAttribute("grade", "Fourth Grade Students");
         }
 
     }
 
-    public List<Student> findStudentsHavingBirthdayToday(){
-        List<Student> birthdaysToday =new ArrayList<>();
+    //Logic to find students having birthday on that day
+    public List<Student> findStudentsHavingBirthdayToday() {
+        List<Student> birthdaysToday = new ArrayList<>();
         List<Student> allStudents = studentRepoI.findAll();
         LocalDate currentDate = LocalDate.now();
         // get current date and month
         int date = currentDate.getDayOfMonth();
         Month month = currentDate.getMonth();
 
-        for(Student s : allStudents){
-            if(s.getDob().getDayOfMonth()==date && s.getDob().getMonth()==month ){
+        for (Student s : allStudents) {
+            if (s.getDob().getDayOfMonth() == date && s.getDob().getMonth() == month) {
                 birthdaysToday.add(s);
             }
         }
-        return  birthdaysToday;
+        return birthdaysToday;
     }
 
-    public int findStudentIdByFirstAndLastName(String firstName, String lastName) {
-      return   studentRepoI.findByFirstNameAndLastName(firstName, lastName).getId();
-    }
 
-    public void deleteStudentById(int id){
-        studentRepoI.deleteById(id);
-    }
 }

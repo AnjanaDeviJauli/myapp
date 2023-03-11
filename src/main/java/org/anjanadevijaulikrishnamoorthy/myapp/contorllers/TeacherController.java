@@ -56,7 +56,7 @@ public class TeacherController {
             return "teacherform";
         }
         log.warn("teacher process method" + teacher);
-        //log.warn(students.toString());
+        log.warn(teacher.toString()+"saved to teacher list");
         if(!teacherRepoI.findAll().contains(teacher)){
         teacherRepoI.save(teacher);
         model.addAttribute("inserted","Succesfully added the teacher");}
@@ -68,10 +68,11 @@ public class TeacherController {
     @GetMapping(value = {"/teacherlist"})
     public String findallteachers(Model model){
         List<TeacherDTO> teachers = teacherService.getTeachersEssInfo();
-
         model.addAttribute("allteachers", teachers);
         return "teacherlist";
     }
+
+    //populate update form
     @GetMapping("/showUpdateForm")
     public ModelAndView showUpdateForm(@RequestParam int id){
         ModelAndView mv = new ModelAndView("teacherform");
@@ -82,11 +83,13 @@ public class TeacherController {
 
     }
 
+    //delete teacher if no course assigned
     @GetMapping("/deleteTeacher")
     public String deleteTeacher(@RequestParam int id,Model model)  {
         Teachers t =teacherRepoI.findById(id).get();
         if(t.getCourses()!=null && t.getCourses().size()==0) {
             teacherRepoI.deleteById(id);
+            log.warn("Teacher with id %d deleted",id);
             model.addAttribute("message1",String.format("%s %s Teacher is deleted",t.getFirstNameT(),t.getLastNameT()));
         }else{
             model.addAttribute("message1",

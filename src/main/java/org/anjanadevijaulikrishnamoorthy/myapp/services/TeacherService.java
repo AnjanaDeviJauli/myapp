@@ -81,4 +81,12 @@ public class TeacherService {
     public String findTeacherByIdFirstNameAndLastName(int id){
       return   teacherRepoI.findById(id).get().getFirstNameT()+" "+teacherRepoI.findById(id).get().getLastNameT();
     }
+
+    public  boolean findIFCourseAssignedToTeacher(int id,String name){
+
+        return teacherRepoI.findCourseByTeachers(id).stream().anyMatch(course -> course.getCourseName().equals(name));
+
+
+    }
+
 }
