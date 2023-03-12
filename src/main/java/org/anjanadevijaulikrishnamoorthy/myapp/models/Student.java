@@ -1,25 +1,18 @@
 package org.anjanadevijaulikrishnamoorthy.myapp.models;
-
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.anjanadevijaulikrishnamoorthy.myapp.services.ScoreService;
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 import java.util.Objects;
 
 @NoArgsConstructor
 @ToString
 @RequiredArgsConstructor
-//@AllArgsConstructor
 @Getter
 @Setter
 @Slf4j

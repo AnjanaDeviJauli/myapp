@@ -39,9 +39,15 @@
                       <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
                   </div>
       
-                  
+              
               </form>
               
+            </td>
+            <td>
+              <a th:href="@{/scores/deleteStudentCourse(id=${score.id})}" 
+              sec:authorize="hasRole('ADMIN')"
+             
+              class="btn btn-danger ml-2" >Delete Course</a>
             </td>
              
               </tr>

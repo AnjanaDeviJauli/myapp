@@ -2,6 +2,7 @@ package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.anjanadevijaulikrishnamoorthy.myapp.dao.ScoreRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
@@ -21,6 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "scores")
 public class ScoreController {
+    private final ScoreRepoI scoreRepoI;
 
     ScoreService scoreService;
 
@@ -31,10 +33,12 @@ public class ScoreController {
     List<Student> lowScoreStudent = new ArrayList<>();
 
     @Autowired
-    public ScoreController(ScoreService scoreService, CourseService courseService, StudentService studentService) {
+    public ScoreController(ScoreService scoreService, CourseService courseService, StudentService studentService,
+                           ScoreRepoI scoreRepoI) {
         this.scoreService = scoreService;
         this.courseService = courseService;
         this.studentService = studentService;
+        this.scoreRepoI = scoreRepoI;
     }
     String message="message";
     String scores = "scores";
@@ -94,6 +98,11 @@ public class ScoreController {
         return scorelist;
     }
 
+
+
+
+
+
     //display student score when Add Score button is clicked for each student
     @GetMapping("/studentScore")
     public String studentscore(@RequestParam int id, Model model) {
@@ -147,6 +156,27 @@ public class ScoreController {
         //display the score details of the student with input form to enter score/mark.
         return scorelist;
     }
+
+    @GetMapping("/deleteStudentCourse")
+    public String deleteCourseScore(@RequestParam int id,Model model) {
+        //Find the score corresponding to each course using score id
+        int ids = scoreRepoI.findStudentByScore(id).getId();
+        Score s = scoreRepoI.findById(id).get();
+        scoreRepoI.delete(s);
+
+        return "redirect:/scores/studentScore?id="+ids;
+    }
+
+//    @GetMapping("/scorelist")
+//    public String scoreList(@RequestParam int id, Model model){
+//
+//        Student s = scoreRepoI.findStudentByScore(id);
+//        List<Score> studentScore = scoreService.findScoreByStudent(s);
+//        model.addAttribute(scores, studentScore);
+//        return scorelist;
+//    }
+
+
 
     @GetMapping("/highScoreStudents")
     public String findHighScoreStudent(Model model){

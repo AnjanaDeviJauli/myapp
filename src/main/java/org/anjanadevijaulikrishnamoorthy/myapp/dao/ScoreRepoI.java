@@ -20,4 +20,7 @@ public interface ScoreRepoI extends JpaRepository<Score,Integer> {
     @Query("SELECT SUM(S.mark) FROM Score S WHERE S.student=?1")
     Double findStudentScoreSum(Student s);
 
+    @Query("SELECT S.student FROM Score S WHERE S.id=?1")
+    Student findStudentByScore(int id);
+
 }

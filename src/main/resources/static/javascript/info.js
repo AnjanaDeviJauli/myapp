@@ -1,22 +1,14 @@
-console.log("inside my javascript")
-var selectedfiels = document.getElementById("reference");
+var b = document.getElementById("toggler");
+b.addEventListener("click",action);
 
-/*<![CDATA[*/
-var myval = /*[[${student}]]*/ "Test";
-/*]]>*/
 
-//var dateofbirth =document.getElementById("dob");
-
-selectedfiels.addEventListener("click", RefernceDob);
-function RefernceDob()
-{
-    
-var t=document.createTextNode(myval[0].dob);
-var p = document.createElement("P");
-//attach text to para
-p.appendChild(t);
-//attach para to div
-selectedfiels.appendChild(p);
-
+var hidden = false;
+function action() {
+    hidden = !hidden;
+    if(hidden) {
+        alert("are you sure to delete")
+        document.getElementById('togglee').style.visibility = 'hidden';
+    } else {
+        document.getElementById('togglee').style.visibility = 'visible';
+    }
 }
-

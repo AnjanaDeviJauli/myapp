@@ -18,11 +18,10 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "students")
 public class StudentController {
-    final String studentform="studentform";
-
-    final String studentfind = "studentfind";
-    final String list = "list";
-    final String birthdaystoday = "birthdaystoday";
+    static final String STUDENTFORM="studentform";
+    static final String STUDENTFIMD = "studentfind";
+    static final String LIST = "list";
+    static final String BIRTHDAYSTODAY = "birthdaystoday";
     final StudentRepoI studentRepoI;
     final StudentService studentService;
 
@@ -40,42 +39,42 @@ public class StudentController {
         int numberOfGirls = studentService.findNumberOfGirls();
         int numberOfBoys = studentService.findNumberOfBoys();
         log.warn(allStud.toString());
-        log.warn("number of boys" + String.valueOf(numberOfBoys));
-        log.warn("number of girls" + String.valueOf(numberOfGirls));
+        log.warn("number of boys" + numberOfBoys);
+        log.warn("number of girls" + numberOfGirls);
         model.addAttribute("allstu", allStud);
         model.addAttribute("numofgirls", numberOfGirls);
         model.addAttribute("numofboys", numberOfBoys);
         model.addAttribute("totalcount", numberOfBoys + numberOfGirls);
         model.addAttribute("grade", "All Students");
-        return list;
+        return LIST;
     }
 
     //display students in first grade
     @GetMapping(value = {"/first"})
     public String firstgrade(Model model) {
         studentService.byGrade(model, 1);
-        return list;
+        return LIST;
     }
 
     //display students in second grade
     @GetMapping(value = {"/second"})
     public String secondgrade(Model model) {
         studentService.byGrade(model, 2);
-        return list;
+        return LIST;
     }
 
     //display students in third grade
     @GetMapping(value = {"/third"})
     public String thirdgrade(Model model) {
         studentService.byGrade(model, 3);
-        return list;
+        return LIST;
     }
 
     //dislplay students in fourth grade
     @GetMapping(value = {"/fourth"})
     public String fourthgrade(Model model) {
         studentService.byGrade(model, 4);
-        return list;
+        return LIST;
     }
 
     //display students having bithday today
@@ -85,7 +84,7 @@ public class StudentController {
         log.warn("students celebrating birhtday" + birthdaysToday.toString());
         model.addAttribute("allstu", birthdaysToday);
         model.addAttribute("message", "Happy Birthday!!!");
-        return birthdaystoday;
+        return BIRTHDAYSTODAY;
     }
 
 
@@ -100,7 +99,7 @@ public class StudentController {
     //Create student object
     @GetMapping("/studentform")
     public ModelAndView studentForm() {
-        ModelAndView mv = new ModelAndView("studentform");
+        ModelAndView mv = new ModelAndView(STUDENTFORM);
         Student s = new Student();
         mv.addObject("student", s);
         return mv;
@@ -112,17 +111,17 @@ public class StudentController {
     public String studentProcess(@Valid @ModelAttribute("student") Student students, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.debug(bindingResult.getAllErrors().toString());
-            return studentform;
+            return STUDENTFORM;
         }
         log.warn("student save method" + students);
         //save distinct new student
         if (!studentService.findAllStudents().contains(students)) {
             studentRepoI.save(students);
-            model.addAttribute("inserted", "Sucessfully registered the student");
+            model.addAttribute("inserted", "Sucessfully registered/updated the student");
         } else {
             model.addAttribute("inserted", "Student already exist");
         }
-        return studentform;
+        return STUDENTFORM;
     }
 
     //search student by id
@@ -135,9 +134,9 @@ public class StudentController {
         } catch (RuntimeException ex) {
             ex.printStackTrace();
             model.addAttribute("student_not_found", String.format("Student: %d not found!", id));
-            return studentfind;
+            return STUDENTFIMD;
         }
-        return studentfind;
+        return STUDENTFIMD;
     }
 
 
@@ -160,16 +159,16 @@ public class StudentController {
         } catch (RuntimeException ex) {
             ex.printStackTrace();
             model.addAttribute("student_not_found", "Student not found for the given first and last name combination!");
-            return (studentfind);
+            return (STUDENTFIMD);
         }
-        return studentfind;
+        return STUDENTFIMD;
     }
 
 
     //mapping to student find page when it is refreshed
     @GetMapping("/find*")
     public String findStudent() {
-        return studentfind;
+        return STUDENTFIMD;
     }
 
 

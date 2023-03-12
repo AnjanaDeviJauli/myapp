@@ -27,12 +27,12 @@ public class StudentService {
     public StudentService(StudentRepoI studentRepoI) {
         this.studentRepoI = studentRepoI;
     }
-
+    static final String GRADE ="grade";
 
     //Service layer for methods in repository
     public Student findStudentById(int id) {
-        return studentRepoI.findById(id).get();
-    }
+
+        return studentRepoI.findById(id).get();   }
 
     public List<Student> findAllStudents() {
         return studentRepoI.findAll();
@@ -60,10 +60,10 @@ public class StudentService {
         int numberOfBoys = studentRepoI.fineNumberOfBoysInGrade(gradeLevel);
         int numberOfGirls = studentRepoI.fineNumberOfGirlsInGrade(gradeLevel);
 
-        log.warn("students in %d grade", gradeLevel);
+        log.warn(String.valueOf(gradeLevel));
         log.warn(students.toString());
-        log.warn("number of girls: %d", numberOfGirls);
-        log.warn("number of boys:%d", numberOfBoys);
+        log.warn(String.valueOf(numberOfGirls));
+        log.warn(String.valueOf(numberOfBoys));
 
         //binding students in particular grade in model attribute "allstu" and finding number of girls
         //and boys in that grade
@@ -74,13 +74,13 @@ public class StudentService {
 
         //display title with the model attribute variable in front end
         if (gradeLevel == 1) {
-            model.addAttribute("grade", "First Grade Students");
+            model.addAttribute(GRADE, "First Grade Students");
         } else if (gradeLevel == 2) {
-            model.addAttribute("grade", "Second Grade Students");
+            model.addAttribute(GRADE, "Second Grade Students");
         } else if (gradeLevel == 3) {
-            model.addAttribute("grade", "Third Grade Students");
+            model.addAttribute(GRADE, "Third Grade Students");
         } else if (gradeLevel == 4) {
-            model.addAttribute("grade", "Fourth Grade Students");
+            model.addAttribute(GRADE, "Fourth Grade Students");
         }
 
     }
