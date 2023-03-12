@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "students")
 public class StudentController {
-    public enum Template {studentform}
+    final String studentform="studentform";
 
     final String studentfind = "studentfind";
     final String list = "list";
@@ -109,10 +109,10 @@ public class StudentController {
 
     //Using student object above "student" to get values from fields and save in database
     @PostMapping("/savestudent")
-    public Template studentProcess(@Valid @ModelAttribute("student") Student students, BindingResult bindingResult, Model model) {
+    public String studentProcess(@Valid @ModelAttribute("student") Student students, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.debug(bindingResult.getAllErrors().toString());
-            return Template.studentform;
+            return studentform;
         }
         log.warn("student save method" + students);
         //save distinct new student
@@ -122,7 +122,7 @@ public class StudentController {
         } else {
             model.addAttribute("inserted", "Student already exist");
         }
-        return Template.studentform;
+        return studentform;
     }
 
     //search student by id

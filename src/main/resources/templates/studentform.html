@@ -72,7 +72,7 @@
                         <div class="row">
                           <div class="col-md-6 mb-4 d-flex align-items-center">
           
-                            <div id="reference" class="form-outline datepicker w-100">
+                            <div class="form-outline datepicker">
                               <input type="date"
                                      class="form-control form-control-lg"
                                      min="2010-01-01"
@@ -81,7 +81,7 @@
                                      id="dob"
                                      name="dob"
                                      th:field="*{dob}"
-                                     th:value="${dob}" 
+                                     value="${dob}" 
                                      text="${dob}"
                                      required/>
                                      <label for="dob" class="form-label">Birthday </label><br>
