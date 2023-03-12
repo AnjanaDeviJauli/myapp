@@ -10,7 +10,39 @@
       <center> <h2 style="color: blanchedalmond;" th:text="${message}"></h2></center>
       <div class="row">
         
-          <div th:replace="fragrams/studentcard :: studentcard" />
+          <!-- <div th:replace="fragrams/studentcard :: studentcard" /> -->
+          <div
+          class="col-sm-4 gy-5"
+          th:each="student: ${allstu}"
+        >
+          <div th:fragment="studentcard" class="card" style="width: 18rem">
+            <div class="card-header" style="color: black">
+              <span>Student Id:</span>
+              <span th:text="${student.id}"></span>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <span>First Name:</span>
+                <span th:text="${student.firstName}"></span>
+              </li>
+              <li class="list-group-item">
+                <span>Last Name:</span> <span th:text="${student.lastName}"></span>
+              </li>
+              <li class="list-group-item">
+                <span>Gender:</span> <span th:text="${student.gender}"></span>
+              </li>
+              <li class="list-group-item">
+                <span>Grade:</span> <span th:text="${student.grade}"></span>
+              </li>
+              <li class="list-group-item">
+                <span>DOB:</span> <span th:text="${student.dob}"></span>
+              </li>
+              <li class="list-group-item">
+                <span>Age:</span> <span th:text="${student.age}"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
         
       </div>
     </div>
