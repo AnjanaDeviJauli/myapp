@@ -148,12 +148,16 @@ public class MyCommandLineRunner implements CommandLineRunner {
         AuthGroup authGroup2 = new AuthGroup("ashley@gmail.com", "ROLE_USER");
         AuthGroup authGroup3 = new AuthGroup("elizabeth@gmail.com", "ROLE_USER");
         AuthGroup authGroup4 = new AuthGroup("anjana@gmail.com", "ROLE_ADMIN");
+        AuthGroup authGroup5 = new AuthGroup("vathsala@gmail.com", "ROLE_USER");
+        AuthGroup authGroup6 = new AuthGroup("jamey@gmail.com", "ROLE_USER");
 
 
         //authGroupRepoI.save(authGroup1);
         authGroupRepoI.save(authGroup2);
         authGroupRepoI.save(authGroup3);
         authGroupRepoI.save(authGroup4);
+        authGroupRepoI.save(authGroup5);
+        authGroupRepoI.save(authGroup6);
 
 
 

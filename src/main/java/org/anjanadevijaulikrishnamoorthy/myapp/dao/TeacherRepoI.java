@@ -16,4 +16,7 @@ public interface TeacherRepoI extends JpaRepository<Teachers,Integer> {
 
     @Query("SELECT T.courses FROM Teachers T WHERE T.id=?1")
     List<Course> findCourseByTeachers(int id);
+
+    @Query("SELECT T.courses FROM Teachers T WHERE T.email=?1")
+    List<Course> findCourseByAuthEmail(String email);
 }

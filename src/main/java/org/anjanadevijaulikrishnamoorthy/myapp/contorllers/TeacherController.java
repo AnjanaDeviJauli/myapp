@@ -2,9 +2,11 @@ package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.anjanadevijaulikrishnamoorthy.myapp.dao.AuthGroupRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.CourseRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dto.TeacherDTO;
+import org.anjanadevijaulikrishnamoorthy.myapp.models.AuthGroup;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
@@ -29,14 +31,16 @@ public class TeacherController {
     final TeacherRepoI teacherRepoI;
    final TeacherService teacherService;
    final CourseService courseService;
+   final AuthGroupRepoI authGroupRepoI;
 
 
     public TeacherController(TeacherRepoI teacherRepoI, TeacherService teacherService,
-                             CourseRepoI courseRepoI,CourseService courseService) {
+                             CourseRepoI courseRepoI,CourseService courseService,AuthGroupRepoI authGroupRepoI) {
         this.teacherRepoI = teacherRepoI;
         this.teacherService = teacherService;
         this.courseRepoI = courseRepoI;
         this.courseService=courseService;
+        this.authGroupRepoI=authGroupRepoI;
     }
 
     //Teacher form
@@ -59,6 +63,10 @@ public class TeacherController {
         log.warn(teacher.toString()+"saved to teacher list");
         if(!teacherRepoI.findAll().contains(teacher)){
         teacherRepoI.save(teacher);
+
+        AuthGroup authGroup = new AuthGroup(teacher.getEmail(),"ROLE_USER");
+        authGroupRepoI.save(authGroup);
+
         model.addAttribute("inserted","Succesfully added the teacher");}
         else{model.addAttribute("inserted","Teacher already exist");}
         return "teacherform";
@@ -87,13 +95,18 @@ public class TeacherController {
     @GetMapping("/deleteTeacher")
     public String deleteTeacher(@RequestParam int id,Model model)  {
         Teachers t =teacherRepoI.findById(id).get();
-        if(t.getCourses()!=null && t.getCourses().size()==0) {
+        Teachers t4 = new Teachers("Anjana","Devi",
+                "anjana@gmail.com","anjanadevi","password");
+        if(t.getCourses()!=null && t.getCourses().size()==0 && !t.equals(t4)) {
+
             teacherRepoI.deleteById(id);
+            List<AuthGroup> auth= authGroupRepoI.findByEmail(t.getEmail());
+            authGroupRepoI.deleteAll(auth);
             log.warn("Teacher with id %d deleted",id);
             model.addAttribute("message1",String.format("%s %s Teacher is deleted",t.getFirstNameT(),t.getLastNameT()));
         }else{
             model.addAttribute("message1",
-                    String.format("%s %s teacher cannot be deleted because, he/she is assigned to course",t.getFirstNameT(),t.getLastNameT()));
+                    String.format("%s %s teacher cannot be deleted because, he/she is assigned to course/auth",t.getFirstNameT(),t.getLastNameT()));
 
         }
         List<TeacherDTO> teachers = teacherService.getTeachersEssInfo();

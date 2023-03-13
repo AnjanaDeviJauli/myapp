@@ -3,9 +3,11 @@ package org.anjanadevijaulikrishnamoorthy.myapp.contorllers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.ScoreRepoI;
+import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
+import org.anjanadevijaulikrishnamoorthy.myapp.models.Teachers;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.CourseService;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.ScoreService;
 import org.anjanadevijaulikrishnamoorthy.myapp.services.StudentService;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "scores")
 public class ScoreController {
+    private final TeacherRepoI teacherRepoI;
     private final ScoreRepoI scoreRepoI;
 
     ScoreService scoreService;
@@ -31,14 +35,19 @@ public class ScoreController {
     StudentService studentService;
     List<Student> highScoreStudent = new ArrayList<>();
     List<Student> lowScoreStudent = new ArrayList<>();
+    List<String> ho = new ArrayList<>();
+    List<String> lo = new ArrayList<>();
 
+    Course c = new Course();
     @Autowired
     public ScoreController(ScoreService scoreService, CourseService courseService, StudentService studentService,
-                           ScoreRepoI scoreRepoI) {
+                           ScoreRepoI scoreRepoI,
+                           TeacherRepoI teacherRepoI) {
         this.scoreService = scoreService;
         this.courseService = courseService;
         this.studentService = studentService;
         this.scoreRepoI = scoreRepoI;
+        this.teacherRepoI = teacherRepoI;
     }
     static final String MESSAGE="message";
     static final String SCORES = "scores";
@@ -84,6 +93,7 @@ public class ScoreController {
         List<Course> courseAssignedToStudent = new ArrayList<>();
         List<Score> studentScore = new ArrayList<>();
 
+
         //Assigning all the course from checklist to the student and updating score object
         scoreService.assignCourseToStudent(s, cid);
 
@@ -114,11 +124,17 @@ public class ScoreController {
 
     //To enter/update mark for each Course assigned to a Student
     @PostMapping("/saveScoretoStudenCourse")
-    public String addStudentCourseScore(@Valid @RequestParam int id, @RequestParam(name = "mark") double mark, Model model) throws Exception {
+    public String addStudentCourseScore(@Valid @RequestParam int id, @RequestParam(name = "mark") double mark, Model model, Principal principal) throws Exception {
         //Find the score corresponding to each course using score id
         Score s = scoreService.findByScoreId(id);
+       c=s.getCourse();
+        String email = principal.getName();
+
+        List<Course> courses = teacherRepoI.findCourseByAuthEmail(email);
+
+
         log.warn(s.toString());
-        if(mark<=100 && mark>=0) {
+        if(mark<=100 && mark>=0 && courses.contains(c) || email.equalsIgnoreCase("anjana@gmail.com")) {
 
 
             //set mark for that score corresponding to the course since each score object has its
@@ -127,29 +143,35 @@ public class ScoreController {
 
             //save the updated score object
             scoreService.saveScore(s);
+
         }else throw new Exception();
+
 
         //The following attribute is used to display score details of the particular student
         List<Score> studentScore = scoreService.findScoreByStudent(s.getStudent());
         model.addAttribute(SCORES, studentScore);
 
         //Finding the average of the mark for that student
-        double average = scoreService.findStudentAverageScore(s.getStudent());
-        model.addAttribute("average", average);
+       // double average = scoreService.findStudentAverageScore(s.getStudent());
+        model.addAttribute("average", s.getMark());
 
         //Display exam grade according to the average
-        String examgrade = scoreService.findGrade(average);
+        String examgrade = scoreService.findGrade(s.getMark());
 
         model.addAttribute("examgrade",examgrade);
+
 
 
         if(examgrade.equalsIgnoreCase("A") && !highScoreStudent.contains(s.getStudent())){
             highScoreStudent.add(s.getStudent());
 
+
         }else if(examgrade.equalsIgnoreCase("f")||(examgrade.equalsIgnoreCase("e"))
-        || (examgrade.equalsIgnoreCase("d"))||(examgrade.equalsIgnoreCase("c"))){
-            if(!lowScoreStudent.contains(s.getStudent())){
-            lowScoreStudent.add(s.getStudent());}
+        || (examgrade.equalsIgnoreCase("d"))||(examgrade.equalsIgnoreCase("c")) &&
+                !lowScoreStudent.contains(s.getStudent())){
+            lowScoreStudent.add(s.getStudent());
+
+
         }
 
         //display the score details of the student with input form to enter score/mark.
@@ -170,12 +192,16 @@ public class ScoreController {
 
     @GetMapping("/highScoreStudents")
     public String findHighScoreStudent(Model model){
+
+
         model.addAttribute("allstu",highScoreStudent);
         model.addAttribute(MESSAGE,"Students in Extension/Advanced class");
         return "birthdaystoday";
     }
     @GetMapping("/lowScoreStudents")
     public String findlowScoreStudent(Model model){
+
+
         model.addAttribute("allstu",lowScoreStudent);
         model.addAttribute(MESSAGE,"Students attending mandatory tutoring");
         return "birthdaystoday";

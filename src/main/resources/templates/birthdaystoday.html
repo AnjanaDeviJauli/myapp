@@ -40,8 +40,12 @@
               <li class="list-group-item">
                 <span>Age:</span> <span th:text="${student.age}"></span>
               </li>
+              <li class="list-group-item">
+                <span th:if="${course}" th:text="${course}" class="text-primary"></span>
+              </li>
             </ul>
           </div>
+
         </div>
         
       </div>
