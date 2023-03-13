@@ -181,13 +181,13 @@ public class ScoreController {
     @GetMapping("/highScoreStudents")
     public String findHighScoreStudent(Model model){
         model.addAttribute("allstu",highScoreStudent);
-        model.addAttribute(message,"Students in Extention/Advanced class");
+        model.addAttribute(message,"Students in Extension/Advanced class");
         return "birthdaystoday";
     }
     @GetMapping("/lowScoreStudents")
     public String findlowScoreStudent(Model model){
         model.addAttribute("allstu",lowScoreStudent);
-        model.addAttribute(message,"Students attending mandatory tutioring");
+        model.addAttribute(message,"Students attending mandatory tutoring");
         return "birthdaystoday";
     }
 
