@@ -40,9 +40,9 @@ public class ScoreController {
         this.studentService = studentService;
         this.scoreRepoI = scoreRepoI;
     }
-    String message="message";
-    String scores = "scores";
-    String scorelist = "scorelist";
+    static final String MESSAGE="message";
+    static final String SCORES = "scores";
+    static final String SCORELIST = "scorelist";
 
     //Show registration form to assign course for each student
     @GetMapping("/selectStudentToAddCourses")
@@ -62,7 +62,7 @@ public class ScoreController {
 
         //Checking null if all course is already assigned to student
         if (c == null) {
-            model.addAttribute(message, "No more course to add");
+            model.addAttribute(MESSAGE, "No more course to add");
             throw new Exception();
         }
 
@@ -92,10 +92,10 @@ public class ScoreController {
         studentScore = scoreService.findScoreByStudent(s);
         model.addAttribute("student", s);
         model.addAttribute("courses", courseAssignedToStudent);
-        model.addAttribute(scores, studentScore);
+        model.addAttribute(SCORES, studentScore);
 
         //  return "redirect:/students/findStudentbyParam?="+sid;
-        return scorelist;
+        return SCORELIST;
     }
 
 
@@ -108,8 +108,8 @@ public class ScoreController {
     public String studentscore(@RequestParam int id, Model model) {
         Student s = studentService.findStudentById(id);
         List<Score> studentScore = scoreService.findScoreByStudent(s);
-        model.addAttribute(scores, studentScore);
-        return scorelist;
+        model.addAttribute(SCORES, studentScore);
+        return SCORELIST;
     }
 
     //To enter/update mark for each Course assigned to a Student
@@ -131,14 +131,15 @@ public class ScoreController {
 
         //The following attribute is used to display score details of the particular student
         List<Score> studentScore = scoreService.findScoreByStudent(s.getStudent());
-        model.addAttribute(scores, studentScore);
+        model.addAttribute(SCORES, studentScore);
 
         //Finding the average of the mark for that student
-        Double average = scoreService.findStudentAverageScore(s.getStudent());
+        double average = scoreService.findStudentAverageScore(s.getStudent());
         model.addAttribute("average", average);
 
         //Display exam grade according to the average
         String examgrade = scoreService.findGrade(average);
+
         model.addAttribute("examgrade",examgrade);
 
 
@@ -147,14 +148,12 @@ public class ScoreController {
 
         }else if(examgrade.equalsIgnoreCase("f")||(examgrade.equalsIgnoreCase("e"))
         || (examgrade.equalsIgnoreCase("d"))||(examgrade.equalsIgnoreCase("c"))){
-            if(!lowScoreStudent.contains(s.getStudent()))
-            lowScoreStudent.add(s.getStudent());
-
-
+            if(!lowScoreStudent.contains(s.getStudent())){
+            lowScoreStudent.add(s.getStudent());}
         }
 
         //display the score details of the student with input form to enter score/mark.
-        return scorelist;
+        return SCORELIST;
     }
 
     @GetMapping("/deleteStudentCourse")
@@ -167,27 +166,18 @@ public class ScoreController {
         return "redirect:/scores/studentScore?id="+ids;
     }
 
-//    @GetMapping("/scorelist")
-//    public String scoreList(@RequestParam int id, Model model){
-//
-//        Student s = scoreRepoI.findStudentByScore(id);
-//        List<Score> studentScore = scoreService.findScoreByStudent(s);
-//        model.addAttribute(scores, studentScore);
-//        return scorelist;
-//    }
-
 
 
     @GetMapping("/highScoreStudents")
     public String findHighScoreStudent(Model model){
         model.addAttribute("allstu",highScoreStudent);
-        model.addAttribute(message,"Students in Extension/Advanced class");
+        model.addAttribute(MESSAGE,"Students in Extension/Advanced class");
         return "birthdaystoday";
     }
     @GetMapping("/lowScoreStudents")
     public String findlowScoreStudent(Model model){
         model.addAttribute("allstu",lowScoreStudent);
-        model.addAttribute(message,"Students attending mandatory tutoring");
+        model.addAttribute(MESSAGE,"Students attending mandatory tutoring");
         return "birthdaystoday";
     }
 

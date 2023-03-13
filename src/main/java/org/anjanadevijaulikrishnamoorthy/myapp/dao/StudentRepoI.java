@@ -8,14 +8,14 @@ import java.util.List;
 @Repository
 public interface StudentRepoI extends JpaRepository<Student,Integer> {
 
-
-    @Query("SELECT S FROM Student S WHERE S.grade=?1")
     List<Student> findByGrade(int grade);
 
-   Student findByFirstNameAndLastName(String firstName,String lastName);
+    Student findByFirstNameAndLastName(String firstName,String lastName);
 
     @Query("SELECT count(S.gender) fROM Student S where S.gender='M'")
     Integer fineNumberOfBoys();
+
+
 
     @Query("SELECT count(S.gender) fROM Student S where S.gender='F'")
     Integer fineNumberOfGirls();
