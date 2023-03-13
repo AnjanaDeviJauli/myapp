@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.ScoreRepoI;
 import org.anjanadevijaulikrishnamoorthy.myapp.dao.TeacherRepoI;
+import org.anjanadevijaulikrishnamoorthy.myapp.dto.StudentCourseDTO;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Course;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Score;
 import org.anjanadevijaulikrishnamoorthy.myapp.models.Student;
@@ -33,10 +34,8 @@ public class ScoreController {
     CourseService courseService;
 
     StudentService studentService;
-    List<Student> highScoreStudent = new ArrayList<>();
-    List<Student> lowScoreStudent = new ArrayList<>();
-    List<String> ho = new ArrayList<>();
-    List<String> lo = new ArrayList<>();
+    List<StudentCourseDTO> highScoreStudent = new ArrayList<>();
+    List<StudentCourseDTO> lowScoreStudent = new ArrayList<>();
 
     Course c = new Course();
     @Autowired
@@ -163,13 +162,13 @@ public class ScoreController {
 
 
         if(examgrade.equalsIgnoreCase("A") && !highScoreStudent.contains(s.getStudent())){
-            highScoreStudent.add(s.getStudent());
+            highScoreStudent.add(new StudentCourseDTO(s.getStudent(),s.getCourse().getCourseName()));
 
 
         }else if(examgrade.equalsIgnoreCase("f")||(examgrade.equalsIgnoreCase("e"))
         || (examgrade.equalsIgnoreCase("d"))||(examgrade.equalsIgnoreCase("c")) &&
                 !lowScoreStudent.contains(s.getStudent())){
-            lowScoreStudent.add(s.getStudent());
+            lowScoreStudent.add(new StudentCourseDTO(s.getStudent(),s.getCourse().getCourseName()));
 
 
         }
@@ -192,19 +191,15 @@ public class ScoreController {
 
     @GetMapping("/highScoreStudents")
     public String findHighScoreStudent(Model model){
-
-
         model.addAttribute("allstu",highScoreStudent);
         model.addAttribute(MESSAGE,"Students in Extension/Advanced class");
-        return "birthdaystoday";
+        return "specialclasses";
     }
     @GetMapping("/lowScoreStudents")
     public String findlowScoreStudent(Model model){
-
-
         model.addAttribute("allstu",lowScoreStudent);
         model.addAttribute(MESSAGE,"Students attending mandatory tutoring");
-        return "birthdaystoday";
+        return "specialclasses";
     }
 
 

@@ -13,34 +13,36 @@
           <!-- <div th:replace="fragrams/studentcard :: studentcard" /> -->
           <div
           class="col-sm-4 gy-5"
-          th:each="student: ${allstu}"
+          th:each="studentdto: ${allstu}"
         >
-          <div th:fragment="studentcard" class="card" style="width: 18rem">
+          <div class="card" style="width: 18rem">
             <div class="card-header" style="color: black">
               <span>Student Id:</span>
-              <span th:text="${student.id}"></span>
+              <span th:text="${studentdto.student.id}"></span>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
                 <span>First Name:</span>
-                <span th:text="${student.firstName}"></span>
+                <span th:text="${studentdto.student.firstName}"></span>
               </li>
               <li class="list-group-item">
-                <span>Last Name:</span> <span th:text="${student.lastName}"></span>
+                <span>Last Name:</span> <span th:text="${studentdto.student.lastName}"></span>
               </li>
               <li class="list-group-item">
-                <span>Gender:</span> <span th:text="${student.gender}"></span>
+                <span>Gender:</span> <span th:text="${studentdto.student.gender}"></span>
               </li>
               <li class="list-group-item">
-                <span>Grade:</span> <span th:text="${student.grade}"></span>
+                <span>Grade:</span> <span th:text="${studentdto.student.grade}"></span>
               </li>
               <li class="list-group-item">
-                <span>DOB:</span> <span th:text="${student.dob}"></span>
+                <span>DOB:</span> <span th:text="${studentdto.student.dob}"></span>
               </li>
               <li class="list-group-item">
-                <span>Age:</span> <span th:text="${student.age}"></span>
+                <span>Age:</span> <span th:text="${studentdto.student.age}"></span>
               </li>
-              
+              <li class="list-group-item">
+                <span>Course:</span> <span th:text="${studentdto.course}"></span>
+              </li>
             </ul>
           </div>
 
